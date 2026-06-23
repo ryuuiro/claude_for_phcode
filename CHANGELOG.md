@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.5.2] - 2026-06-23
+### Fixed
+- Nombre del paquete corregido al nombre definitivo (claude-for-phcode)
+
 ## [2.5.1] - 2026-06-23
 ### Added
 - Enviar mensaje ahora es solo Enter (antes requería Ctrl+Enter)
