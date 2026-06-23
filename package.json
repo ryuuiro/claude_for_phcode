@@ -1,0 +1,16 @@
+{
+    "name": "claude-assistant",
+    "title": "Claude AI Assistant",
+    "description": "Claude AI coding assistant para Phoenix Code. Chat, explicar, refactorizar, editar archivos y git — sin configuración extra.",
+    "version": "2.5.0",
+    "author": "Edgar Erik Dávila Muñoz",
+    "license": "MIT",
+    "engines": {
+        "brackets": ">=3.0.0"
+    },
+    "nodeConfig": {
+        "nodeIsRequired": true,
+        "main": "node/index.js",
+        "npmInstall": "node/"
+    }
+}
