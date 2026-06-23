@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.5.4] - 2026-06-23
+### Fixed
+- Removido npmInstall para evitar error de instalación desde el marketplace
+
 ## [2.5.3] - 2026-06-23
 ### Fixed
 - Agregado package-lock.json para correcta instalación desde el marketplace
