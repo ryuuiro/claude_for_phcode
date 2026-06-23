@@ -259,7 +259,7 @@ define(function (require, exports, module) {
             $panel.find("#clai-gitpanel").show();
             $panel.find("#clai-input").attr("placeholder", "Pregunta sobre git o escribe instrucciones");
         } else {
-            $panel.find("#clai-input").attr("placeholder", "Escribe un mensaje... (Ctrl+Enter enviar)");
+            $panel.find("#clai-input").attr("placeholder", "Escribe un mensaje... (Enter enviar)");
         }
     }
 

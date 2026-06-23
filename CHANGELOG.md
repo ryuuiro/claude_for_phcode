@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.5.1] - 2026-06-23
+### Added
+- Enviar mensaje ahora es solo Enter (antes requería Ctrl+Enter)
+
 ## [2.5.0] - 2026-06-23
 ### Added
 - Contador de tiempo en vivo mientras Claude procesa

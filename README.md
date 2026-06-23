@@ -1,7 +1,7 @@
 # ✦ Claude AI Assistant para Phoenix Code
 
 **Autor:** Erik Dávila
-**Versión:** 2.5.0
+**Versión:** 2.5.1
 **Requiere:** Phoenix Code Desktop + Claude Code CLI instalado
 
 ---
