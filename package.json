@@ -4,6 +4,7 @@
     "description": "Claude AI coding assistant para Phoenix Code. Chat, explicar, refactorizar, editar archivos y git — sin configuración extra.",
     "version": "2.5.2",
     "author": "Edgar Erik Dávila Muñoz",
+    "homepage": "https://github.com/ryuuiro/claude_for_phcode",
     "license": "MIT",
     "engines": {
         "brackets": ">=3.0.0"
