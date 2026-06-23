@@ -1,5 +1,5 @@
 {
-    "name": "claude-assistant",
+    "name": "claude-for-phcode",
     "title": "Claude AI Assistant",
     "description": "Claude AI coding assistant para Phoenix Code. Chat, explicar, refactorizar, editar archivos y git — sin configuración extra.",
     "version": "2.5.1",
