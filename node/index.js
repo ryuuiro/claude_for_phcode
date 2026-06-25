@@ -7,6 +7,7 @@
 const { spawn, exec } = require("child_process");
 const fs   = require("fs");
 const path = require("path");
+const pkg  = require("../package.json");
 
 // ── NodeConnector setup ────────────────────────────────────────────────────
 const CONNECTOR_ID = "claude_assistant_connector";
@@ -234,10 +235,10 @@ exports.clearHistory = async function({ sessionId = "default" }) {
  * Ping — verifica que Node está listo
  */
 exports.ping = async function() {
-    return { ok: true, version: "2.5.4" };
+    return { ok: true, version: pkg.version };
 };
 
-console.log("[Claude Node] Backend iniciado v2.5.4");
+console.log("[Claude Node] Backend iniciado v" + pkg.version);
 
 /**
  * Cancelar la ejecución actual de Claude
