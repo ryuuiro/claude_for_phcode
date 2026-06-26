@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.5.5] - 2026-06-26
+### Added
+- Soporte multilingüe completo: 31 idiomas disponibles (bg, cs, da, de, el, en, es, fa, fi, fr, gl, hr, hu, id, it, ja, ko, nb, nl, pl, pt-br, ro, ru, sk, sl, sr, sv, tr, uk, zh-cn, zh-tw)
+- Módulo de traducción con carga perezosa (lazy loading) por idioma para minimizar el impacto en el arranque
+- Menú de selección de idioma en el panel (botón ⋮ → Idioma / Language)
+- Detección automática del idioma según la configuración regional de Phoenix Code
+- Persistencia del idioma seleccionado en `localStorage`
+- Todos los textos del frontend y del backend (prompts a Claude, mensajes de error, etiquetas) son ahora completamente traducibles por idioma
+
 ## [2.5.4] - 2026-06-23
 ### Fixed
 - Removido npmInstall para evitar error de instalación desde el marketplace
