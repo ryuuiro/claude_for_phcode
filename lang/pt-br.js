@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Projeto não encontrado: ",
         beErrOutsideProject:  "Caminho está fora do projeto",
         beErrCancelled:       "Cancelado pelo usuário.",
-        beErrCantRun:         "Não foi possível executar claude: "
+        beErrCantRun:         "Não foi possível executar claude: ",
+        promptProject:        "Projeto: ",
+        promptActiveFile:     "Arquivo ativo: ",
+        promptCodeFrom:       "Código de ",
+        editPreviewTitle:     "Pré-visualizar alterações",
+        editPreviewApply:     "Aplicar"
     };
 });

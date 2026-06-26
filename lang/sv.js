@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Projekt inte hittat: ",
         beErrOutsideProject:  "Sökvägen är utanför projektet",
         beErrCancelled:       "Avbrutet av användaren.",
-        beErrCantRun:         "Kunde inte köra claude: "
+        beErrCantRun:         "Kunde inte köra claude: ",
+        promptProject:        "Projekt: ",
+        promptActiveFile:     "Aktiv fil: ",
+        promptCodeFrom:       "Kod från ",
+        editPreviewTitle:     "Förhandsvisa ändringar",
+        editPreviewApply:     "Tillämpa"
     };
 });

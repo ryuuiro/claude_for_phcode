@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Το έργο δεν βρέθηκε: ",
         beErrOutsideProject:  "Η διαδρομή είναι εκτός έργου",
         beErrCancelled:       "Ακυρώθηκε από τον χρήστη.",
-        beErrCantRun:         "Δεν ήταν δυνατή η εκτέλεση του claude: "
+        beErrCantRun:         "Δεν ήταν δυνατή η εκτέλεση του claude: ",
+        promptProject:        "Έργο: ",
+        promptActiveFile:     "Ενεργό αρχείο: ",
+        promptCodeFrom:       "Κώδικας από ",
+        editPreviewTitle:     "Προεπισκόπηση αλλαγών",
+        editPreviewApply:     "Εφαρμογή"
     };
 });

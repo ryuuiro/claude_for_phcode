@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Проектът не е намерен: ",
         beErrOutsideProject:  "Пътят е извън проекта",
         beErrCancelled:       "Отказано от потребителя.",
-        beErrCantRun:         "Не може да се стартира claude: "
+        beErrCantRun:         "Не може да се стартира claude: ",
+        promptProject:        "Проект: ",
+        promptActiveFile:     "Активен файл: ",
+        promptCodeFrom:       "Код от ",
+        editPreviewTitle:     "Преглед на промените",
+        editPreviewApply:     "Приложи"
     };
 });

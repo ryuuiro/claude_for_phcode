@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "项目未找到：",
         beErrOutsideProject:  "路径在项目外部",
         beErrCancelled:       "用户已取消。",
-        beErrCantRun:         "无法运行 claude："
+        beErrCantRun:         "无法运行 claude：",
+        promptProject:        "项目：",
+        promptActiveFile:     "当前文件：",
+        promptCodeFrom:       "来自 ",
+        editPreviewTitle:     "预览更改",
+        editPreviewApply:     "应用"
     };
 });

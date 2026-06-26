@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Projekt ikke fundet: ",
         beErrOutsideProject:  "Stien er uden for projektet",
         beErrCancelled:       "Annulleret af brugeren.",
-        beErrCantRun:         "Kunne ikke køre claude: "
+        beErrCantRun:         "Kunne ikke køre claude: ",
+        promptProject:        "Projekt: ",
+        promptActiveFile:     "Aktiv fil: ",
+        promptCodeFrom:       "Kode fra ",
+        editPreviewTitle:     "Forhåndsvis ændringer",
+        editPreviewApply:     "Anvend"
     };
 });

@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Proiect negăsit: ",
         beErrOutsideProject:  "Calea este în afara proiectului",
         beErrCancelled:       "Anulat de utilizator.",
-        beErrCantRun:         "Nu s-a putut rula claude: "
+        beErrCantRun:         "Nu s-a putut rula claude: ",
+        promptProject:        "Proiect: ",
+        promptActiveFile:     "Fișier activ: ",
+        promptCodeFrom:       "Cod din ",
+        editPreviewTitle:     "Previzualizare modificări",
+        editPreviewApply:     "Aplică"
     };
 });

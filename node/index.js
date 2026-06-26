@@ -93,6 +93,37 @@ function runClaude(prompt, cwd) {
 }
 runClaude._currentProc = null;
 
+function runClaudeStream(prompt, cwd, sessionId) {
+    return new Promise((resolve, reject) => {
+        const opts = { shell: true, env: { ...process.env } };
+        if (cwd && fs.existsSync(cwd)) opts.cwd = cwd;
+
+        const proc = spawn("claude", ["--print", "--output-format", "text", "--dangerously-skip-permissions"], opts);
+        proc.stdin.write(prompt);
+        proc.stdin.end();
+
+        if (runClaude._currentProc) {
+            try { runClaude._currentProc.kill(); } catch(e) {}
+        }
+        runClaude._currentProc = proc;
+
+        let out = "", err = "";
+        proc.stdout.on("data", d => {
+            const chunk = d.toString();
+            out += chunk;
+            try { nodeConnector.triggerPeer("streamChunk", { chunk, sessionId }); } catch(e) {}
+        });
+        proc.stderr.on("data", d => { err += d.toString(); });
+        proc.on("close", code => {
+            runClaude._currentProc = null;
+            if (code === 0 || out.trim()) resolve(out.trim());
+            else if (code === null) reject(new Error("Cancelled."));
+            else reject(new Error(err.trim() || "Claude error code " + code));
+        });
+        proc.on("error", e => { runClaude._currentProc = null; reject(new Error("Could not run claude: " + e.message)); });
+    });
+}
+
 // ── Git ────────────────────────────────────────────────────────────────────
 function runGit(args, cwd) {
     return new Promise((resolve, reject) => {
@@ -138,7 +169,7 @@ exports.ask = async function({ prompt, projectPath, sessionId = "default", inclu
 
     fullPrompt += p.userLabel + prompt;
 
-    const reply = await runClaude(fullPrompt, projectPath);
+    const reply = await runClaudeStream(fullPrompt, projectPath, sessionId);
     addToHistory(sessionId, "user", prompt);
     addToHistory(sessionId, "assistant", reply);
     return reply;
@@ -179,6 +210,59 @@ exports.editFile = async function({ instruction, filePath, projectPath, sessionI
 
     fs.mkdirSync(path.dirname(fullPath), { recursive: true });
     fs.writeFileSync(fullPath, cleaned, "utf8");
+
+    addToHistory(sessionId, "user",      p.editHistMsg.replace("%s", filePath).replace("%s", instruction));
+    addToHistory(sessionId, "assistant", p.editHistReply.replace("%s", filePath));
+
+    return p.editDone + filePath;
+};
+
+exports.previewEdit = async function({ instruction, filePath, projectPath, sessionId = "default", strings }) {
+    const p = strings || {};
+    if (!projectPath || !fs.existsSync(projectPath)) throw new Error(p.beErrNotFound + projectPath);
+
+    const fullPath = path.join(projectPath, filePath.replace(/\//g, path.sep));
+    const resolved = path.resolve(fullPath);
+    if (!resolved.startsWith(path.resolve(projectPath))) throw new Error(p.beErrOutsideProject);
+
+    let oldContent = "";
+    try { oldContent = fs.readFileSync(fullPath, "utf8"); } catch(e) {}
+
+    const history = getHistory(sessionId);
+    let histCtx = "";
+    if (history.length > 0) {
+        histCtx = p.histContext + "\n";
+        history.slice(-4).forEach(m => {
+            histCtx += (m.role === "user" ? p.editHistUser : p.editHistAssist) + m.content.slice(0, 150) + "\n";
+        });
+        histCtx += "\n";
+    }
+
+    const editPrompt = p.systemEdit + "\n"
+        + histCtx
+        + p.editModify.replace("%s", filePath) + "\n\n"
+        + instruction + "\n\n"
+        + (oldContent
+            ? p.editCurrent + "\n```\n" + oldContent + "\n```\n\n"
+            : p.editCreate + "\n\n")
+        + p.editImportant;
+
+    const newRaw = await runClaude(editPrompt, projectPath);
+    const newContent = newRaw.replace(/^```[\w]*\n?/, "").replace(/\n?```$/, "").trim();
+
+    return { filePath, oldContent, newContent };
+};
+
+exports.applyEdit = async function({ filePath, projectPath, newContent, instruction, sessionId = "default", strings }) {
+    const p = strings || {};
+    if (!projectPath || !fs.existsSync(projectPath)) throw new Error(p.beErrNotFound + projectPath);
+
+    const fullPath = path.join(projectPath, filePath.replace(/\//g, path.sep));
+    const resolved = path.resolve(fullPath);
+    if (!resolved.startsWith(path.resolve(projectPath))) throw new Error(p.beErrOutsideProject);
+
+    fs.mkdirSync(path.dirname(fullPath), { recursive: true });
+    fs.writeFileSync(fullPath, newContent, "utf8");
 
     addToHistory(sessionId, "user",      p.editHistMsg.replace("%s", filePath).replace("%s", instruction));
     addToHistory(sessionId, "assistant", p.editHistReply.replace("%s", filePath));

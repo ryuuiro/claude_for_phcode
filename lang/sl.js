@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Projekt ni najden: ",
         beErrOutsideProject:  "Pot je zunaj projekta",
         beErrCancelled:       "Preklicano s strani uporabnika.",
-        beErrCantRun:         "Ni mogoče zagnati claude: "
+        beErrCantRun:         "Ni mogoče zagnati claude: ",
+        promptProject:        "Projekt: ",
+        promptActiveFile:     "Aktivna datoteka: ",
+        promptCodeFrom:       "Koda iz ",
+        editPreviewTitle:     "Predogled sprememb",
+        editPreviewApply:     "Uporabi"
     };
 });

@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Prosjekt ikke funnet: ",
         beErrOutsideProject:  "Banen er utenfor prosjektet",
         beErrCancelled:       "Avbrutt av brukeren.",
-        beErrCantRun:         "Kunne ikke kjøre claude: "
+        beErrCantRun:         "Kunne ikke kjøre claude: ",
+        promptProject:        "Prosjekt: ",
+        promptActiveFile:     "Aktiv fil: ",
+        promptCodeFrom:       "Kode fra ",
+        editPreviewTitle:     "Forhåndsvis endringer",
+        editPreviewApply:     "Bruk"
     };
 });

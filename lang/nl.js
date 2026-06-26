@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Project niet gevonden: ",
         beErrOutsideProject:  "Pad bevindt zich buiten het project",
         beErrCancelled:       "Geannuleerd door gebruiker.",
-        beErrCantRun:         "Kon claude niet uitvoeren: "
+        beErrCantRun:         "Kon claude niet uitvoeren: ",
+        promptProject:        "Project: ",
+        promptActiveFile:     "Actief bestand: ",
+        promptCodeFrom:       "Code uit ",
+        editPreviewTitle:     "Wijzigingen bekijken",
+        editPreviewApply:     "Toepassen"
     };
 });

@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Проект не найден: ",
         beErrOutsideProject:  "Путь находится вне проекта",
         beErrCancelled:       "Отменено пользователем.",
-        beErrCantRun:         "Не удалось запустить claude: "
+        beErrCantRun:         "Не удалось запустить claude: ",
+        promptProject:        "Проект: ",
+        promptActiveFile:     "Активный файл: ",
+        promptCodeFrom:       "Код из ",
+        editPreviewTitle:     "Предпросмотр изменений",
+        editPreviewApply:     "Применить"
     };
 });

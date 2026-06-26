@@ -25,6 +25,7 @@ define(function (require, exports, module) {
     var currentMode     = "chat";
     var SESSION_ID      = "session_" + Date.now();
     var loadingTimer    = null;
+    var streamState     = null;
     var nodeConnector   = null;
 
     // ── Language ───────────────────────────────────────────────────────────
@@ -293,6 +294,63 @@ define(function (require, exports, module) {
         return '<p style="margin:0;line-height:1.6">' + text + '</p>';
     }
 
+    function escHtml(s) {
+        return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    }
+
+    function buildDiffHTML(oldText, newText) {
+        var oldLines = (oldText || "").split("\n");
+        var newLines = (newText || "").split("\n");
+        var html = [];
+        var max = Math.max(oldLines.length, newLines.length);
+        for (var i = 0; i < max; i++) {
+            var o = i < oldLines.length ? oldLines[i] : undefined;
+            var n = i < newLines.length ? newLines[i] : undefined;
+            if (o === n) {
+                html.push('<div style="color:#585b70;font-size:10px;white-space:pre;font-family:monospace;padding:0 2px"> ' + escHtml(n || "") + '</div>');
+            } else {
+                if (o !== undefined) html.push('<div style="color:#f38ba8;background:#2a0d14;font-size:10px;white-space:pre;font-family:monospace;padding:0 2px">-' + escHtml(o) + '</div>');
+                if (n !== undefined) html.push('<div style="color:#a6e3a1;background:#0d2a14;font-size:10px;white-space:pre;font-family:monospace;padding:0 2px">+' + escHtml(n) + '</div>');
+            }
+        }
+        return html.join("") || '<div style="color:#6c7086;font-size:10px;padding:4px">No changes</div>';
+    }
+
+    function showDiffPreview(result, instruction, projectPath) {
+        var $msgs = $panel.find("#clai-messages");
+        var lbl  = '<span style="color:#cba6f7;font-size:10px;font-weight:700;display:block;margin-bottom:6px">' + t("claudeLabel") + '</span>';
+        var hdr  = '<div style="color:#a6adc8;font-size:11px;margin-bottom:6px">' + t("editPreviewTitle") + ': <strong style="color:#cdd6f4">' + result.filePath + '</strong></div>';
+        var diff = '<div style="max-height:200px;overflow-y:auto;border:1px solid #313244;border-radius:4px;padding:4px 6px;margin-bottom:8px;background:#11111b">' + buildDiffHTML(result.oldContent, result.newContent) + '</div>';
+        var btns = '<div style="display:flex;gap:6px">'
+            + '<button class="clai-apply-edit" style="background:#a6e3a1;border:none;color:#1e1e2e;border-radius:4px;padding:4px 12px;cursor:pointer;font-size:11px;font-weight:700">' + t("editPreviewApply") + '</button>'
+            + '<button class="clai-discard-edit" style="background:transparent;border:1px solid #f38ba8;color:#f38ba8;border-radius:4px;padding:4px 12px;cursor:pointer;font-size:11px">' + t("cancelBtn") + '</button>'
+            + '</div>';
+        var $preview = $('<div style="padding:10px 12px;background:#1e1e2e;border:1px solid #cba6f7;border-radius:12px 12px 12px 4px">' + lbl + hdr + diff + btns + '</div>');
+
+        $preview.find(".clai-apply-edit").on("click", function() {
+            var $b = $preview.find(".clai-apply-edit, .clai-discard-edit");
+            $b.prop("disabled", true).css("opacity", "0.5");
+            callNode("applyEdit", { filePath: result.filePath, projectPath: projectPath, newContent: result.newContent, instruction: instruction, sessionId: SESSION_ID, strings: getStrings() })
+                .then(function() {
+                    $b.remove();
+                    $preview.append('<div style="color:#a6e3a1;font-size:11px;margin-top:6px">' + t("donePrefix") + result.filePath + '</div>');
+                })
+                .catch(function(err) {
+                    $b.remove();
+                    $preview.append('<div style="color:#f38ba8;font-size:11px;margin-top:6px">' + t("errPrefix") + err.message + '</div>');
+                });
+        });
+
+        $preview.find(".clai-discard-edit").on("click", function() {
+            $preview.find(".clai-apply-edit, .clai-discard-edit").remove();
+            $preview.append('<div style="color:#6c7086;font-size:11px;margin-top:6px">' + t("cancelled") + '</div>');
+        });
+
+        $msgs.find("#clai-welcome").hide();
+        $msgs.append($preview);
+        $msgs.scrollTop($msgs[0].scrollHeight);
+    }
+
     // ── UI ─────────────────────────────────────────────────────────────────
 
     function showStatus(msg, color) {
@@ -351,6 +409,7 @@ define(function (require, exports, module) {
         }, 1000);
         $l.find("#clai-cancel-btn").on("click", function() {
             callNode("cancel", {}).catch(function(){});
+            streamState = null;
             hideLoading();
             appendMessage("assistant", t("cancelled"), false);
             isLoading = false;
@@ -406,24 +465,37 @@ define(function (require, exports, module) {
         if (currentMode === "edit") {
             if (!rf) { appendMessage("assistant", t("errOpenFile"), true); return; }
             showLoading(t("loadingEdit"));
-            callNode("editFile", { instruction: raw, filePath: rf, projectPath: pp, sessionId: SESSION_ID, strings: getStrings() })
-                .then(function(msg) { hideLoading(); appendMessage("assistant", t("donePrefix") + msg); })
+            callNode("previewEdit", { instruction: raw, filePath: rf, projectPath: pp, sessionId: SESSION_ID, strings: getStrings() })
+                .then(function(result) { hideLoading(); showDiffPreview(result, raw, pp); })
                 .catch(function(err) { hideLoading(); appendMessage("assistant", t("errPrefix") + err.message, true); });
         } else {
+            streamState = { sessionId: SESSION_ID, $el: null, content: "" };
             showLoading();
             var prompt = "";
-            if (pp) { var parts = pp.replace(/\\/g, "/").split("/"); prompt += "Proyecto: " + parts[parts.length - 1] + "\n"; }
-            if (rf) prompt += "Archivo activo: " + rf + "\n";
+            if (pp) { var parts = pp.replace(/\\/g, "/").split("/"); prompt += t("promptProject") + parts[parts.length - 1] + "\n"; }
+            if (rf) prompt += t("promptActiveFile") + rf + "\n";
             if (prompt) prompt += "\n";
             if (attachedContext) {
-                prompt += raw + "\n\nCodigo de " + attachedContext.filename + ":\n```\n" + attachedContext.code + "\n```";
+                prompt += raw + "\n\n" + t("promptCodeFrom") + attachedContext.filename + ":\n```\n" + attachedContext.code + "\n```";
                 setCtx(null);
             } else {
                 prompt += raw;
             }
             callNode("ask", { prompt: prompt, projectPath: pp, sessionId: SESSION_ID, includeProject: !!includeProject, strings: getStrings() })
-                .then(function(reply) { hideLoading(); appendMessage("assistant", reply); })
-                .catch(function(err) { hideLoading(); appendMessage("assistant", t("errPrefix") + err.message, true); });
+                .then(function(reply) {
+                    var finalEl = streamState ? streamState.$el : null;
+                    streamState = null;
+                    if (!finalEl) { hideLoading(); appendMessage("assistant", reply); }
+                })
+                .catch(function(err) {
+                    var hadEl = streamState && streamState.$el;
+                    streamState = null;
+                    if (hadEl) { hadEl.remove(); }
+                    hideLoading();
+                    if (err.message !== "Cancelled.") {
+                        appendMessage("assistant", t("errPrefix") + err.message, true);
+                    }
+                });
         }
     }
 
@@ -573,6 +645,28 @@ define(function (require, exports, module) {
 
     AppInit.appReady(function() {
         nodeConnector = NodeConnector.createNodeConnector(CONNECTOR_ID, exports);
+
+        nodeConnector.on("streamChunk", function(evt, data) {
+            if (!streamState || !$panel || data.sessionId !== streamState.sessionId) return;
+            streamState.content += data.chunk;
+            var $msgs = $panel.find("#clai-messages");
+            if (!streamState.$el) {
+                hideLoading();
+                var lbl = '<span style="color:#cba6f7;font-size:10px;font-weight:700;display:block;margin-bottom:3px">' + t("claudeLabel") + '</span>';
+                streamState.$el = $('<div style="padding:10px 12px;background:#1e1e2e;border:1px solid #313244;border-radius:12px 12px 12px 4px">' + lbl + '<div class="clai-stream-body"></div></div>');
+                streamState.$el.on("click", ".clai-copy", function() {
+                    var code = decodeURIComponent($(this).data("c"));
+                    var btn = this;
+                    if (navigator.clipboard) navigator.clipboard.writeText(code).then(function() {
+                        $(btn).text(t("copiedBtn"));
+                        setTimeout(function() { $(btn).text(t("copyBtn")); }, 2000);
+                    });
+                });
+                $msgs.append(streamState.$el);
+            }
+            streamState.$el.find(".clai-stream-body").html(renderMarkdown(streamState.content));
+            $msgs.scrollTop($msgs[0].scrollHeight);
+        });
 
         CommandManager.register("Claude: Abrir panel",      CMD_TOGGLE_PANEL, togglePanel);
         CommandManager.register("Claude: Explicar codigo",  CMD_EXPLAIN,      function() {

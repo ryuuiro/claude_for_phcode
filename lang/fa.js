@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "پروژه یافت نشد: ",
         beErrOutsideProject:  "مسیر خارج از پروژه است",
         beErrCancelled:       "توسط کاربر لغو شد.",
-        beErrCantRun:         "اجرای claude ممکن نیست: "
+        beErrCantRun:         "اجرای claude ممکن نیست: ",
+        promptProject:        "پروژه: ",
+        promptActiveFile:     "فایل فعال: ",
+        promptCodeFrom:       "کد از ",
+        editPreviewTitle:     "پیش‌نمایش تغییرات",
+        editPreviewApply:     "اعمال"
     };
 });

@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Проект не знайдено: ",
         beErrOutsideProject:  "Шлях знаходиться поза проектом",
         beErrCancelled:       "Скасовано користувачем.",
-        beErrCantRun:         "Не вдалося запустити claude: "
+        beErrCantRun:         "Не вдалося запустити claude: ",
+        promptProject:        "Проект: ",
+        promptActiveFile:     "Активний файл: ",
+        promptCodeFrom:       "Код з ",
+        editPreviewTitle:     "Попередній перегляд змін",
+        editPreviewApply:     "Застосувати"
     };
 });

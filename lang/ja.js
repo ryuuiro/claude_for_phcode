@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "プロジェクトが見つかりません: ",
         beErrOutsideProject:  "プロジェクト外のパスです",
         beErrCancelled:       "ユーザーによりキャンセルされました。",
-        beErrCantRun:         "claudeを実行できませんでした: "
+        beErrCantRun:         "claudeを実行できませんでした: ",
+        promptProject:        "プロジェクト: ",
+        promptActiveFile:     "アクティブファイル: ",
+        promptCodeFrom:       "コード（",
+        editPreviewTitle:     "変更のプレビュー",
+        editPreviewApply:     "適用"
     };
 });

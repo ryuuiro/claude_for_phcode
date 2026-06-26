@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Пројекат није пронађен: ",
         beErrOutsideProject:  "Путања је ван пројекта",
         beErrCancelled:       "Отказао корисник.",
-        beErrCantRun:         "Није могуће покренути claude: "
+        beErrCantRun:         "Није могуће покренути claude: ",
+        promptProject:        "Пројекат: ",
+        promptActiveFile:     "Активна датотека: ",
+        promptCodeFrom:       "Кôд из ",
+        editPreviewTitle:     "Преглед измена",
+        editPreviewApply:     "Примени"
     };
 });

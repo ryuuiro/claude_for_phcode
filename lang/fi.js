@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Projektia ei löydy: ",
         beErrOutsideProject:  "Polku on projektin ulkopuolella",
         beErrCancelled:       "Käyttäjä peruutti.",
-        beErrCantRun:         "Claudea ei voitu suorittaa: "
+        beErrCantRun:         "Claudea ei voitu suorittaa: ",
+        promptProject:        "Projekti: ",
+        promptActiveFile:     "Aktiivinen tiedosto: ",
+        promptCodeFrom:       "Koodi tiedostosta ",
+        editPreviewTitle:     "Esikatsele muutokset",
+        editPreviewApply:     "Käytä"
     };
 });

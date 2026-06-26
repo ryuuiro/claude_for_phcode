@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "找不到專案：",
         beErrOutsideProject:  "路徑在專案外部",
         beErrCancelled:       "使用者已取消。",
-        beErrCantRun:         "無法執行 claude："
+        beErrCantRun:         "無法執行 claude：",
+        promptProject:        "專案：",
+        promptActiveFile:     "目前檔案：",
+        promptCodeFrom:       "來自 ",
+        editPreviewTitle:     "預覽變更",
+        editPreviewApply:     "套用"
     };
 });

@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Projekt nem található: ",
         beErrOutsideProject:  "Az elérési út a projekten kívül van",
         beErrCancelled:       "Felhasználó megszakította.",
-        beErrCantRun:         "Nem sikerült futtatni a claude-t: "
+        beErrCantRun:         "Nem sikerült futtatni a claude-t: ",
+        promptProject:        "Projekt: ",
+        promptActiveFile:     "Aktív fájl: ",
+        promptCodeFrom:       "Kód innen: ",
+        editPreviewTitle:     "Változtatások előnézete",
+        editPreviewApply:     "Alkalmaz"
     };
 });

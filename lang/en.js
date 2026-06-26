@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Project not found: ",
         beErrOutsideProject:  "Path is outside the project",
         beErrCancelled:       "Cancelled by user.",
-        beErrCantRun:         "Could not run claude: "
+        beErrCantRun:         "Could not run claude: ",
+        promptProject:        "Project: ",
+        promptActiveFile:     "Active file: ",
+        promptCodeFrom:       "Code from ",
+        editPreviewTitle:     "Preview changes",
+        editPreviewApply:     "Apply"
     };
 });

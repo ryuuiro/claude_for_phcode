@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Projet non trouvé : ",
         beErrOutsideProject:  "Le chemin est en dehors du projet",
         beErrCancelled:       "Annulé par l'utilisateur.",
-        beErrCantRun:         "Impossible d'exécuter claude : "
+        beErrCantRun:         "Impossible d'exécuter claude : ",
+        promptProject:        "Projet : ",
+        promptActiveFile:     "Fichier actif : ",
+        promptCodeFrom:       "Code de ",
+        editPreviewTitle:     "Aperçu des modifications",
+        editPreviewApply:     "Appliquer"
     };
 });

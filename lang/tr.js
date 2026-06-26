@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Proje bulunamadı: ",
         beErrOutsideProject:  "Yol proje dışında",
         beErrCancelled:       "Kullanıcı tarafından iptal edildi.",
-        beErrCantRun:         "Claude çalıştırılamadı: "
+        beErrCantRun:         "Claude çalıştırılamadı: ",
+        promptProject:        "Proje: ",
+        promptActiveFile:     "Aktif dosya: ",
+        promptCodeFrom:       "Kod kaynağı: ",
+        editPreviewTitle:     "Değişiklikleri önizle",
+        editPreviewApply:     "Uygula"
     };
 });

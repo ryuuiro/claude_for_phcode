@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "프로젝트를 찾을 수 없음: ",
         beErrOutsideProject:  "경로가 프로젝트 외부에 있습니다",
         beErrCancelled:       "사용자가 취소했습니다.",
-        beErrCantRun:         "claude를 실행할 수 없습니다: "
+        beErrCantRun:         "claude를 실행할 수 없습니다: ",
+        promptProject:        "프로젝트: ",
+        promptActiveFile:     "활성 파일: ",
+        promptCodeFrom:       "코드 출처: ",
+        editPreviewTitle:     "변경 사항 미리보기",
+        editPreviewApply:     "적용"
     };
 });

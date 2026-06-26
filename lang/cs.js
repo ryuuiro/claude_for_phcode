@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Projekt nenalezen: ",
         beErrOutsideProject:  "Cesta je mimo projekt",
         beErrCancelled:       "Zrušeno uživatelem.",
-        beErrCantRun:         "Nepodařilo se spustit claude: "
+        beErrCantRun:         "Nepodařilo se spustit claude: ",
+        promptProject:        "Projekt: ",
+        promptActiveFile:     "Aktivní soubor: ",
+        promptCodeFrom:       "Kód z ",
+        editPreviewTitle:     "Náhled změn",
+        editPreviewApply:     "Použít"
     };
 });

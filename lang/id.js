@@ -89,6 +89,11 @@ define(function () {
         beErrNotFound:        "Proyek tidak ditemukan: ",
         beErrOutsideProject:  "Jalur berada di luar proyek",
         beErrCancelled:       "Dibatalkan oleh pengguna.",
-        beErrCantRun:         "Tidak dapat menjalankan claude: "
+        beErrCantRun:         "Tidak dapat menjalankan claude: ",
+        promptProject:        "Proyek: ",
+        promptActiveFile:     "File aktif: ",
+        promptCodeFrom:       "Kode dari ",
+        editPreviewTitle:     "Pratinjau perubahan",
+        editPreviewApply:     "Terapkan"
     };
 });
