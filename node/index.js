@@ -74,7 +74,6 @@ function runClaude(prompt, cwd) {
         proc.stdin.write(prompt);
         proc.stdin.end();
 
-        // Sin timeout — Claude puede tardar lo que necesite
         if (runClaude._currentProc) {
             try { runClaude._currentProc.kill(); } catch(e) {}
         }
@@ -86,11 +85,10 @@ function runClaude(prompt, cwd) {
         proc.on("close", code => {
             runClaude._currentProc = null;
             if (code === 0 || out.trim()) resolve(out.trim());
-            else if (code === null) reject(new Error("Cancelado por el usuario."));
-            else reject(new Error(err.trim() || "Claude error código " + code));
+            else if (code === null) reject(new Error("Cancelled."));
+            else reject(new Error(err.trim() || "Claude error code " + code));
         });
-        proc.on("error", e => { runClaude._currentProc = null; reject(new Error("No se pudo ejecutar claude: " + e.message)); });
-
+        proc.on("error", e => { runClaude._currentProc = null; reject(new Error("Could not run claude: " + e.message)); });
     });
 }
 runClaude._currentProc = null;
@@ -107,27 +105,23 @@ function runGit(args, cwd) {
 
 // ── Exports (funciones que llama main.js via execPeer) ─────────────────────
 
-/**
- * Enviar mensaje al chat con contexto del proyecto y memoria
- */
-exports.ask = async function({ prompt, projectPath, sessionId = "default", includeProject = false }) {
+exports.ask = async function({ prompt, projectPath, sessionId = "default", includeProject = false, strings }) {
+    const p       = strings || {};
     const history = getHistory(sessionId);
 
-    let fullPrompt = "Eres un asistente de programacion experto integrado en Phoenix Code. "
-        + "Responde SIEMPRE en español. Usa markdown con bloques de codigo cuando corresponda. "
-        + "Puedes crear, editar y eliminar archivos del proyecto cuando se te pida.\n\n";
+    let fullPrompt = p.systemAsk + "\n\n";
 
     if (projectPath && fs.existsSync(projectPath)) {
         const parts = projectPath.replace(/\\/g, "/").split("/");
-        fullPrompt += "Proyecto activo: " + parts[parts.length - 1] + " (" + projectPath + ")\n\n";
+        fullPrompt += p.projectLabel + parts[parts.length - 1] + " (" + projectPath + ")\n\n";
 
         const needsContext = includeProject
-            || /proyecto|todos|archivos|estructura|revisa|analiza|review/i.test(prompt);
+            || /proyecto|todos|archivos|estructura|revisa|analiza|review|project|files|all|structure/i.test(prompt);
 
         if (needsContext) {
             const files = readProjectFiles(projectPath);
             if (files.length > 0) {
-                fullPrompt += "Archivos del proyecto:\n\n";
+                fullPrompt += p.projectFiles + "\n\n";
                 fullPrompt += files.map(f => "### " + f.path + "\n```\n" + f.content + "\n```").join("\n\n");
                 fullPrompt += "\n\n---\n\n";
             }
@@ -135,14 +129,14 @@ exports.ask = async function({ prompt, projectPath, sessionId = "default", inclu
     }
 
     if (history.length > 0) {
-        fullPrompt += "Conversacion anterior:\n";
+        fullPrompt += p.prevConvo + "\n";
         history.forEach(msg => {
-            fullPrompt += (msg.role === "user" ? "Usuario: " : "Asistente: ") + msg.content + "\n\n";
+            fullPrompt += (msg.role === "user" ? p.histUser : p.histAssistant) + msg.content + "\n\n";
         });
         fullPrompt += "---\n\n";
     }
 
-    fullPrompt += "Usuario: " + prompt;
+    fullPrompt += p.userLabel + prompt;
 
     const reply = await runClaude(fullPrompt, projectPath);
     addToHistory(sessionId, "user", prompt);
@@ -150,15 +144,13 @@ exports.ask = async function({ prompt, projectPath, sessionId = "default", inclu
     return reply;
 };
 
-/**
- * Editar un archivo directamente
- */
-exports.editFile = async function({ instruction, filePath, projectPath, sessionId = "default" }) {
-    if (!projectPath || !fs.existsSync(projectPath)) throw new Error("Proyecto no encontrado: " + projectPath);
+exports.editFile = async function({ instruction, filePath, projectPath, sessionId = "default", strings }) {
+    const p = strings || {};
+    if (!projectPath || !fs.existsSync(projectPath)) throw new Error(p.beErrNotFound + projectPath);
 
     const fullPath = path.join(projectPath, filePath.replace(/\//g, path.sep));
     const resolved = path.resolve(fullPath);
-    if (!resolved.startsWith(path.resolve(projectPath))) throw new Error("Ruta fuera del proyecto");
+    if (!resolved.startsWith(path.resolve(projectPath))) throw new Error(p.beErrOutsideProject);
 
     let fileContent = "";
     try { fileContent = fs.readFileSync(fullPath, "utf8"); } catch(e) {}
@@ -166,36 +158,37 @@ exports.editFile = async function({ instruction, filePath, projectPath, sessionI
     const history = getHistory(sessionId);
     let histCtx = "";
     if (history.length > 0) {
-        histCtx = "Contexto previo:\n";
-        history.slice(-4).forEach(m => { histCtx += (m.role === "user" ? "Usuario: " : "Asistente: ") + m.content.slice(0, 150) + "\n"; });
+        histCtx = p.histContext + "\n";
+        history.slice(-4).forEach(m => {
+            histCtx += (m.role === "user" ? p.editHistUser : p.editHistAssist) + m.content.slice(0, 150) + "\n";
+        });
         histCtx += "\n";
     }
 
-    const prompt = "Eres un asistente de programacion experto.\n"
+    const editPrompt = p.systemEdit + "\n"
         + histCtx
-        + "Modifica el archivo " + filePath + " segun esta instruccion:\n\n"
+        + p.editModify.replace("%s", filePath) + "\n\n"
         + instruction + "\n\n"
-        + (fileContent ? "Contenido actual:\n```\n" + fileContent + "\n```\n\n" : "El archivo no existe aun, crealo.\n\n")
-        + "IMPORTANTE: Responde UNICAMENTE con el contenido completo del archivo. "
-        + "Sin explicaciones, sin markdown, sin bloques de codigo, solo el contenido puro.";
+        + (fileContent
+            ? p.editCurrent + "\n```\n" + fileContent + "\n```\n\n"
+            : p.editCreate + "\n\n")
+        + p.editImportant;
 
-    const newContent = await runClaude(prompt, projectPath);
-    const cleaned = newContent.replace(/^```[\w]*\n?/, "").replace(/\n?```$/, "").trim();
+    const newContent = await runClaude(editPrompt, projectPath);
+    const cleaned    = newContent.replace(/^```[\w]*\n?/, "").replace(/\n?```$/, "").trim();
 
     fs.mkdirSync(path.dirname(fullPath), { recursive: true });
     fs.writeFileSync(fullPath, cleaned, "utf8");
 
-    addToHistory(sessionId, "user", "Editar " + filePath + ": " + instruction);
-    addToHistory(sessionId, "assistant", "Archivo " + filePath + " editado.");
+    addToHistory(sessionId, "user",      p.editHistMsg.replace("%s", filePath).replace("%s", instruction));
+    addToHistory(sessionId, "assistant", p.editHistReply.replace("%s", filePath));
 
-    return "Archivo actualizado: " + filePath;
+    return p.editDone + filePath;
 };
 
-/**
- * Operaciones git
- */
-exports.git = async function({ action, projectPath, message }) {
-    if (!projectPath) throw new Error("No hay proyecto.");
+exports.git = async function({ action, projectPath, message, strings }) {
+    const p = strings || {};
+    if (!projectPath) throw new Error(p.beErrNoProject);
 
     switch(action) {
         case "status": return await runGit("status", projectPath);
@@ -203,46 +196,35 @@ exports.git = async function({ action, projectPath, message }) {
         case "diff":   return await runGit("diff", projectPath);
         case "push":   return await runGit("push", projectPath);
         case "commit":
-            if (!message) throw new Error("Falta mensaje de commit");
+            if (!message) throw new Error(p.beErrNoCommitMsg);
             await runGit("add .", projectPath);
             return await runGit('commit -m "' + message.replace(/"/g, '\\"') + '"', projectPath);
-        case "smart-commit":
-            const status = await runGit("status", projectPath);
-            const diff   = await runGit("diff", projectPath).catch(() => "");
-            const msg = await runClaude(
-                "Genera un mensaje de commit conciso en español (máx 72 chars) basado en estos cambios.\n"
-                + "Responde SOLO el mensaje, sin comillas.\n\nStatus:\n" + status + "\n\nDiff:\n" + diff.slice(0, 2000),
+        case "smart-commit": {
+            const status   = await runGit("status", projectPath);
+            const diff     = await runGit("diff", projectPath).catch(() => "");
+            const msg      = await runClaude(
+                p.smartCommit + status + p.smartCommitDiff + diff.slice(0, 2000),
                 projectPath
             );
             const cleanMsg = msg.trim().split("\n")[0];
             await runGit("add .", projectPath);
-            const result = await runGit('commit -m "' + cleanMsg.replace(/"/g, '\\"') + '"', projectPath);
-            return "Commit: " + cleanMsg + "\n\n" + result;
+            const result   = await runGit('commit -m "' + cleanMsg.replace(/"/g, '\\"') + '"', projectPath);
+            return p.commitPrefix + cleanMsg + "\n\n" + result;
+        }
         default:
-            throw new Error("Accion git no reconocida: " + action);
+            throw new Error(p.beErrUnknownAction + action);
     }
 };
 
-/**
- * Limpiar historial de sesión
- */
 exports.clearHistory = async function({ sessionId = "default" }) {
     sessions[sessionId] = [];
     return true;
 };
 
-/**
- * Ping — verifica que Node está listo
- */
 exports.ping = async function() {
     return { ok: true, version: pkg.version };
 };
 
-console.log("[Claude Node] Backend iniciado v" + pkg.version);
-
-/**
- * Cancelar la ejecución actual de Claude
- */
 exports.cancel = async function() {
     if (runClaude._currentProc) {
         try { runClaude._currentProc.kill(); runClaude._currentProc = null; } catch(e) {}
@@ -250,3 +232,5 @@ exports.cancel = async function() {
     }
     return false;
 };
+
+console.log("[Claude Node] Backend iniciado v" + pkg.version);
