@@ -122,9 +122,12 @@ define(function (require, exports, module) {
             // ⋮ menu
             '<div style="position:relative">',
             '<button id="clai-btn-menu" style="background:transparent;border:1px solid #45475a;color:#a6adc8;border-radius:4px;padding:1px 7px;cursor:pointer;font-size:14px;line-height:1.2">&#8942;</button>',
-            '<div id="clai-dropdown" style="display:none;position:absolute;right:0;top:calc(100% + 4px);background:#1e1e2e;border:1px solid #45475a;border-radius:6px;padding:4px 0;z-index:9999;min-width:150px;box-shadow:0 4px 16px rgba(0,0,0,0.6)">',
-            '<div style="padding:3px 10px;color:#6c7086;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">' + t("menuLanguage") + '</div>',
+            '<div id="clai-dropdown" style="display:none;position:absolute;right:0;top:calc(100% + 4px);background:#1e1e2e;border:1px solid #45475a;border-radius:6px;padding:4px 0;z-index:9999;min-width:160px;box-shadow:0 4px 16px rgba(0,0,0,0.6)">',
+            '<button id="clai-lang-toggle" style="display:flex;width:100%;align-items:center;justify-content:space-between;background:none;border:none;color:#cdd6f4;padding:6px 10px;cursor:pointer;font-size:11px;box-sizing:border-box">',
+            '<span>' + t("menuLanguage") + '</span><span style="color:#6c7086;font-size:9px">&#9654;</span></button>',
+            '<div id="clai-lang-list" style="display:none;max-height:200px;overflow-y:auto;border-top:1px solid #313244">',
             SUPPORTED_LANGS.map(function(l) { return '<button class="clai-lang-btn" data-lang="' + l.code + '" data-label="' + l.label + '" style="display:block;width:100%;text-align:left;background:none;border:none;color:#cdd6f4;padding:5px 10px;cursor:pointer;font-size:11px;box-sizing:border-box">' + l.label + '</button>'; }).join(""),
+            '</div>',
             '</div>',
             '</div>',
             '</div></div>',
@@ -489,12 +492,19 @@ define(function (require, exports, module) {
         $panel.find("#clai-btn-menu").off("click").on("click", function(e) {
             e.stopPropagation();
             var $dd = $panel.find("#clai-dropdown");
-            $dd.find(".clai-lang-btn").each(function() {
+            if (!$dd.is(":visible")) $panel.find("#clai-lang-list").hide();
+            $dd.toggle();
+        });
+
+        $panel.find("#clai-lang-toggle").off("click").on("click", function(e) {
+            e.stopPropagation();
+            var $list = $panel.find("#clai-lang-list");
+            $list.find(".clai-lang-btn").each(function() {
                 var isActive = $(this).data("lang") === LANG;
                 $(this).css("color", isActive ? "#cba6f7" : "#cdd6f4");
                 $(this).text((isActive ? "✓ " : "  ") + $(this).data("label"));
             });
-            $dd.toggle();
+            $list.toggle();
         });
 
         $panel.off("click", ".clai-lang-btn").on("click", ".clai-lang-btn", function(e) {
