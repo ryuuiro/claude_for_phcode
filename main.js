@@ -228,6 +228,20 @@ define(function (require, exports, module) {
         return nodeConnector.execPeer(fn, params);
     }
 
+    var BE_KEYS = [
+        "systemAsk","systemEdit","projectLabel","projectFiles","prevConvo",
+        "histUser","histAssistant","userLabel","editModify","editCurrent",
+        "editCreate","editImportant","histContext","editHistUser","editHistAssist",
+        "editDone","editHistMsg","editHistReply","smartCommit","smartCommitDiff",
+        "commitPrefix","beErrNoProject","beErrNoCommitMsg","beErrUnknownAction",
+        "beErrNotFound","beErrOutsideProject","beErrCancelled","beErrCantRun"
+    ];
+    function getStrings() {
+        var s = {};
+        BE_KEYS.forEach(function(k) { s[k] = t(k); });
+        return s;
+    }
+
     // ── Markdown ───────────────────────────────────────────────────────────
 
     function renderMarkdown(text) {
@@ -361,7 +375,7 @@ define(function (require, exports, module) {
         if (currentMode === "edit") {
             if (!rf) { appendMessage("assistant", t("errOpenFile"), true); return; }
             showLoading(t("loadingEdit"));
-            callNode("editFile", { instruction: raw, filePath: rf, projectPath: pp, sessionId: SESSION_ID, lang: LANG })
+            callNode("editFile", { instruction: raw, filePath: rf, projectPath: pp, sessionId: SESSION_ID, strings: getStrings() })
                 .then(function(msg) { hideLoading(); appendMessage("assistant", t("donePrefix") + msg); })
                 .catch(function(err) { hideLoading(); appendMessage("assistant", t("errPrefix") + err.message, true); });
         } else {
@@ -376,7 +390,7 @@ define(function (require, exports, module) {
             } else {
                 prompt += raw;
             }
-            callNode("ask", { prompt: prompt, projectPath: pp, sessionId: SESSION_ID, includeProject: !!includeProject, lang: LANG })
+            callNode("ask", { prompt: prompt, projectPath: pp, sessionId: SESSION_ID, includeProject: !!includeProject, strings: getStrings() })
                 .then(function(reply) { hideLoading(); appendMessage("assistant", reply); })
                 .catch(function(err) { hideLoading(); appendMessage("assistant", t("errPrefix") + err.message, true); });
         }
@@ -389,7 +403,7 @@ define(function (require, exports, module) {
             var msg = $panel.find("#clai-commit-msg").val().trim();
             if (!msg) { alert(t("errCommitMsg")); return; }
             showLoading(t("loadingCommit"));
-            callNode("git", { action: "commit", projectPath: pp, message: msg, lang: LANG })
+            callNode("git", { action: "commit", projectPath: pp, message: msg, strings: getStrings() })
                 .then(function(r) { hideLoading(); $panel.find("#clai-commit-msg").val(""); appendMessage("assistant", "**Commit:**\n\n```\n" + r + "\n```"); })
                 .catch(function(e) { hideLoading(); appendMessage("assistant", t("gitErrPrefix") + e.message, true); });
             return;
@@ -402,7 +416,7 @@ define(function (require, exports, module) {
             push:           t("loadingPush")
         };
         showLoading(labels[action] || action);
-        callNode("git", { action: action, projectPath: pp, lang: LANG })
+        callNode("git", { action: action, projectPath: pp, strings: getStrings() })
             .then(function(r) { hideLoading(); appendMessage("assistant", "**git " + action + ":**\n\n```\n" + r + "\n```"); })
             .catch(function(e) { hideLoading(); appendMessage("assistant", t("gitErrPrefix") + e.message, true); });
     }

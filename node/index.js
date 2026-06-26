@@ -13,116 +13,6 @@ const pkg  = require("../package.json");
 const CONNECTOR_ID = "claude_assistant_connector";
 let nodeConnector  = global.createNodeConnector(CONNECTOR_ID, exports);
 
-// ── Prompts por idioma ─────────────────────────────────────────────────────
-const PROMPTS = {
-    es: {
-        systemAsk:        "Eres un asistente de programacion experto integrado en Phoenix Code. "
-                        + "Responde SIEMPRE en español. Usa markdown con bloques de codigo cuando corresponda. "
-                        + "Puedes crear, editar y eliminar archivos del proyecto cuando se te pida.",
-        systemEdit:       "Eres un asistente de programacion experto.",
-        projectLabel:     "Proyecto activo: ",
-        projectFiles:     "Archivos del proyecto:",
-        prevConvo:        "Conversacion anterior:",
-        histUser:         "Usuario: ",
-        histAssistant:    "Asistente: ",
-        userLabel:        "Usuario: ",
-        editModify:       "Modifica el archivo %s segun esta instruccion:",
-        editCurrent:      "Contenido actual:",
-        editCreate:       "El archivo no existe aun, crealo.",
-        editImportant:    "IMPORTANTE: Responde UNICAMENTE con el contenido completo del archivo. "
-                        + "Sin explicaciones, sin markdown, sin bloques de codigo, solo el contenido puro.",
-        histContext:      "Contexto previo:",
-        editHistUser:     "Usuario: ",
-        editHistAssist:   "Asistente: ",
-        editDone:         "Archivo actualizado: ",
-        editHistMsg:      "Editar %s: %s",
-        editHistReply:    "Archivo %s editado.",
-        smartCommit:      "Genera un mensaje de commit conciso en español (max 72 chars) basado en estos cambios.\n"
-                        + "Responde SOLO el mensaje, sin comillas.\n\nStatus:\n",
-        smartCommitDiff:  "\n\nDiff:\n",
-        commitPrefix:     "Commit: ",
-        errNoProject:     "No hay proyecto.",
-        errNoCommitMsg:   "Falta mensaje de commit",
-        errUnknownAction: "Accion git no reconocida: ",
-        errNotFound:      "Proyecto no encontrado: ",
-        errOutsideProject:"Ruta fuera del proyecto",
-        errCancelled:     "Cancelado por el usuario.",
-        errCantRun:       "No se pudo ejecutar claude: "
-    },
-    en: {
-        systemAsk:        "You are an expert programming assistant integrated in Phoenix Code. "
-                        + "Always respond in English. Use markdown with code blocks when appropriate. "
-                        + "You can create, edit, and delete project files when asked.",
-        systemEdit:       "You are an expert programming assistant.",
-        projectLabel:     "Active project: ",
-        projectFiles:     "Project files:",
-        prevConvo:        "Previous conversation:",
-        histUser:         "User: ",
-        histAssistant:    "Assistant: ",
-        userLabel:        "User: ",
-        editModify:       "Modify the file %s according to this instruction:",
-        editCurrent:      "Current content:",
-        editCreate:       "The file does not exist yet, create it.",
-        editImportant:    "IMPORTANT: Reply ONLY with the complete file content. "
-                        + "No explanations, no markdown, no code blocks, just the raw content.",
-        histContext:      "Previous context:",
-        editHistUser:     "User: ",
-        editHistAssist:   "Assistant: ",
-        editDone:         "File updated: ",
-        editHistMsg:      "Edit %s: %s",
-        editHistReply:    "File %s edited.",
-        smartCommit:      "Generate a concise commit message in English (max 72 chars) based on these changes.\n"
-                        + "Reply ONLY with the message, without quotes.\n\nStatus:\n",
-        smartCommitDiff:  "\n\nDiff:\n",
-        commitPrefix:     "Commit: ",
-        errNoProject:     "No project open.",
-        errNoCommitMsg:   "Missing commit message",
-        errUnknownAction: "Unknown git action: ",
-        errNotFound:      "Project not found: ",
-        errOutsideProject:"Path is outside the project",
-        errCancelled:     "Cancelled by user.",
-        errCantRun:       "Could not run claude: "
-    },
-    ja: {
-        systemAsk:        "あなたはPhoenix Codeに統合された専門的なプログラミングアシスタントです。"
-                        + "常に日本語で回答してください。適切な場合はコードブロック付きのmarkdownを使用してください。"
-                        + "要求に応じてプロジェクトファイルの作成、編集、削除が可能です。",
-        systemEdit:       "あなたは専門的なプログラミングアシスタントです。",
-        projectLabel:     "アクティブプロジェクト: ",
-        projectFiles:     "プロジェクトファイル:",
-        prevConvo:        "過去の会話:",
-        histUser:         "ユーザー: ",
-        histAssistant:    "アシスタント: ",
-        userLabel:        "ユーザー: ",
-        editModify:       "以下の指示に従ってファイル %s を修正してください:",
-        editCurrent:      "現在の内容:",
-        editCreate:       "ファイルはまだ存在しません。作成してください。",
-        editImportant:    "重要: ファイルの完全な内容のみを返してください。"
-                        + "説明なし、markdownなし、コードブロックなし、純粋な内容のみ。",
-        histContext:      "過去のコンテキスト:",
-        editHistUser:     "ユーザー: ",
-        editHistAssist:   "アシスタント: ",
-        editDone:         "ファイルを更新しました: ",
-        editHistMsg:      "%s を編集: %s",
-        editHistReply:    "ファイル %s を編集しました。",
-        smartCommit:      "これらの変更に基づいて日本語の簡潔なコミットメッセージ（最大72文字）を生成してください。\n"
-                        + "メッセージのみを返してください。引用符は不要です。\n\nStatus:\n",
-        smartCommitDiff:  "\n\nDiff:\n",
-        commitPrefix:     "コミット: ",
-        errNoProject:     "プロジェクトがありません。",
-        errNoCommitMsg:   "コミットメッセージがありません",
-        errUnknownAction: "不明なgitアクション: ",
-        errNotFound:      "プロジェクトが見つかりません: ",
-        errOutsideProject:"プロジェクト外のパスです",
-        errCancelled:     "ユーザーによりキャンセルされました。",
-        errCantRun:       "claudeを実行できませんでした: "
-    }
-};
-
-function P(lang) {
-    return PROMPTS[lang] || PROMPTS["es"];
-}
-
 // ── Memoria de conversación ────────────────────────────────────────────────
 const sessions = {};
 
@@ -215,8 +105,8 @@ function runGit(args, cwd) {
 
 // ── Exports (funciones que llama main.js via execPeer) ─────────────────────
 
-exports.ask = async function({ prompt, projectPath, sessionId = "default", includeProject = false, lang = "es" }) {
-    const p       = P(lang);
+exports.ask = async function({ prompt, projectPath, sessionId = "default", includeProject = false, strings }) {
+    const p       = strings || {};
     const history = getHistory(sessionId);
 
     let fullPrompt = p.systemAsk + "\n\n";
@@ -254,13 +144,13 @@ exports.ask = async function({ prompt, projectPath, sessionId = "default", inclu
     return reply;
 };
 
-exports.editFile = async function({ instruction, filePath, projectPath, sessionId = "default", lang = "es" }) {
-    const p = P(lang);
-    if (!projectPath || !fs.existsSync(projectPath)) throw new Error(p.errNotFound + projectPath);
+exports.editFile = async function({ instruction, filePath, projectPath, sessionId = "default", strings }) {
+    const p = strings || {};
+    if (!projectPath || !fs.existsSync(projectPath)) throw new Error(p.beErrNotFound + projectPath);
 
     const fullPath = path.join(projectPath, filePath.replace(/\//g, path.sep));
     const resolved = path.resolve(fullPath);
-    if (!resolved.startsWith(path.resolve(projectPath))) throw new Error(p.errOutsideProject);
+    if (!resolved.startsWith(path.resolve(projectPath))) throw new Error(p.beErrOutsideProject);
 
     let fileContent = "";
     try { fileContent = fs.readFileSync(fullPath, "utf8"); } catch(e) {}
@@ -296,9 +186,9 @@ exports.editFile = async function({ instruction, filePath, projectPath, sessionI
     return p.editDone + filePath;
 };
 
-exports.git = async function({ action, projectPath, message, lang = "es" }) {
-    const p = P(lang);
-    if (!projectPath) throw new Error(p.errNoProject);
+exports.git = async function({ action, projectPath, message, strings }) {
+    const p = strings || {};
+    if (!projectPath) throw new Error(p.beErrNoProject);
 
     switch(action) {
         case "status": return await runGit("status", projectPath);
@@ -306,7 +196,7 @@ exports.git = async function({ action, projectPath, message, lang = "es" }) {
         case "diff":   return await runGit("diff", projectPath);
         case "push":   return await runGit("push", projectPath);
         case "commit":
-            if (!message) throw new Error(p.errNoCommitMsg);
+            if (!message) throw new Error(p.beErrNoCommitMsg);
             await runGit("add .", projectPath);
             return await runGit('commit -m "' + message.replace(/"/g, '\\"') + '"', projectPath);
         case "smart-commit": {
@@ -322,7 +212,7 @@ exports.git = async function({ action, projectPath, message, lang = "es" }) {
             return p.commitPrefix + cleanMsg + "\n\n" + result;
         }
         default:
-            throw new Error(p.errUnknownAction + action);
+            throw new Error(p.beErrUnknownAction + action);
     }
 };
 
