@@ -82,6 +82,40 @@ const PROMPTS = {
         errOutsideProject:"Path is outside the project",
         errCancelled:     "Cancelled by user.",
         errCantRun:       "Could not run claude: "
+    },
+    ja: {
+        systemAsk:        "あなたはPhoenix Codeに統合された専門的なプログラミングアシスタントです。"
+                        + "常に日本語で回答してください。適切な場合はコードブロック付きのmarkdownを使用してください。"
+                        + "要求に応じてプロジェクトファイルの作成、編集、削除が可能です。",
+        systemEdit:       "あなたは専門的なプログラミングアシスタントです。",
+        projectLabel:     "アクティブプロジェクト: ",
+        projectFiles:     "プロジェクトファイル:",
+        prevConvo:        "過去の会話:",
+        histUser:         "ユーザー: ",
+        histAssistant:    "アシスタント: ",
+        userLabel:        "ユーザー: ",
+        editModify:       "以下の指示に従ってファイル %s を修正してください:",
+        editCurrent:      "現在の内容:",
+        editCreate:       "ファイルはまだ存在しません。作成してください。",
+        editImportant:    "重要: ファイルの完全な内容のみを返してください。"
+                        + "説明なし、markdownなし、コードブロックなし、純粋な内容のみ。",
+        histContext:      "過去のコンテキスト:",
+        editHistUser:     "ユーザー: ",
+        editHistAssist:   "アシスタント: ",
+        editDone:         "ファイルを更新しました: ",
+        editHistMsg:      "%s を編集: %s",
+        editHistReply:    "ファイル %s を編集しました。",
+        smartCommit:      "これらの変更に基づいて日本語の簡潔なコミットメッセージ（最大72文字）を生成してください。\n"
+                        + "メッセージのみを返してください。引用符は不要です。\n\nStatus:\n",
+        smartCommitDiff:  "\n\nDiff:\n",
+        commitPrefix:     "コミット: ",
+        errNoProject:     "プロジェクトがありません。",
+        errNoCommitMsg:   "コミットメッセージがありません",
+        errUnknownAction: "不明なgitアクション: ",
+        errNotFound:      "プロジェクトが見つかりません: ",
+        errOutsideProject:"プロジェクト外のパスです",
+        errCancelled:     "ユーザーによりキャンセルされました。",
+        errCantRun:       "claudeを実行できませんでした: "
     }
 };
 

@@ -10,9 +10,6 @@ define(function (require, exports, module) {
     var KeyBindingManager = brackets.getModule("command/KeyBindingManager");
     var NodeConnector     = brackets.getModule("NodeConnector");
 
-    var LangES = require("lang/es");
-    var LangEN = require("lang/en");
-
     var EXTENSION_ID      = "claude-assistant";
     var CONNECTOR_ID      = "claude_assistant_connector";
     var CMD_TOGGLE_PANEL  = EXTENSION_ID + ".togglePanel";
@@ -31,17 +28,33 @@ define(function (require, exports, module) {
     var nodeConnector   = null;
 
     // ── Language ───────────────────────────────────────────────────────────
-    var LANGS = { es: LangES, en: LangEN };
+    var SUPPORTED_LANGS = [
+        { code: "es", label: "Español" },
+        { code: "en", label: "English" },
+        { code: "ja", label: "日本語"  }
+    ];
+    var LANGS = {};
     var LANG  = "en";
 
+    function loadLang(code, cb) {
+        if (LANGS[code]) { if (cb) cb(); return; }
+        require(["lang/" + code], function(mod) {
+            LANGS[code] = mod;
+            if (cb) cb();
+        }, function() {
+            if (code !== "en") { loadLang("en", cb); } else { if (cb) cb(); }
+        });
+    }
+
     (function detectLang() {
+        var codes = SUPPORTED_LANGS.map(function(l) { return l.code; });
         try {
             var saved = localStorage.getItem("claude_lang");
-            if (saved && LANGS[saved]) { LANG = saved; return; }
+            if (saved && codes.indexOf(saved) !== -1) { LANG = saved; return; }
         } catch (e) {}
         try {
             var loc = (brackets.getLocale() || "en").split("-")[0].toLowerCase();
-            if (LANGS[loc]) { LANG = loc; }
+            if (codes.indexOf(loc) !== -1) { LANG = loc; }
         } catch (e) {}
     })();
 
@@ -83,8 +96,7 @@ define(function (require, exports, module) {
             '<button id="clai-btn-menu" style="background:transparent;border:1px solid #45475a;color:#a6adc8;border-radius:4px;padding:1px 7px;cursor:pointer;font-size:14px;line-height:1.2">&#8942;</button>',
             '<div id="clai-dropdown" style="display:none;position:absolute;right:0;top:calc(100% + 4px);background:#1e1e2e;border:1px solid #45475a;border-radius:6px;padding:4px 0;z-index:9999;min-width:150px;box-shadow:0 4px 16px rgba(0,0,0,0.6)">',
             '<div style="padding:3px 10px;color:#6c7086;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">' + t("menuLanguage") + '</div>',
-            '<button class="clai-lang-btn" data-lang="es" data-label="Español" style="display:block;width:100%;text-align:left;background:none;border:none;color:#cdd6f4;padding:5px 10px;cursor:pointer;font-size:11px;box-sizing:border-box">Español</button>',
-            '<button class="clai-lang-btn" data-lang="en" data-label="English" style="display:block;width:100%;text-align:left;background:none;border:none;color:#cdd6f4;padding:5px 10px;cursor:pointer;font-size:11px;box-sizing:border-box">English</button>',
+            SUPPORTED_LANGS.map(function(l) { return '<button class="clai-lang-btn" data-lang="' + l.code + '" data-label="' + l.label + '" style="display:block;width:100%;text-align:left;background:none;border:none;color:#cdd6f4;padding:5px 10px;cursor:pointer;font-size:11px;box-sizing:border-box">' + l.label + '</button>'; }).join(""),
             '</div>',
             '</div>',
             '</div></div>',
@@ -141,16 +153,18 @@ define(function (require, exports, module) {
     // ── Language switching ─────────────────────────────────────────────────
 
     function changeLang(newLang) {
-        if (!LANGS[newLang] || newLang === LANG) return;
+        if (newLang === LANG && LANGS[LANG]) return;
         LANG = newLang;
         try { localStorage.setItem("claude_lang", LANG); } catch (e) {}
         var savedMode = currentMode;
         var savedCtx  = attachedContext;
         attachedContext = null;
-        $panel.html(buildInnerHTML());
-        initUI();
-        setMode(savedMode);
-        if (savedCtx) setCtx(savedCtx);
+        loadLang(LANG, function() {
+            $panel.html(buildInnerHTML());
+            initUI();
+            setMode(savedMode);
+            if (savedCtx) setCtx(savedCtx);
+        });
     }
 
     // ── Helpers ────────────────────────────────────────────────────────────
@@ -481,20 +495,28 @@ define(function (require, exports, module) {
     }
 
     function togglePanel() {
+        function updateBtn() {
+            $("#claude-sidebar-btn").css("border-left", (pluginPanel && pluginPanel.isVisible()) ? "2px solid #cba6f7" : "2px solid transparent");
+        }
         if (!pluginPanel) {
-            $panel = $(buildPanelHTML());
-            var $ico = $('<a href="#" title="Claude AI" style="font-size:15px;color:#cba6f7;text-decoration:none;padding:5px 8px;display:inline-block">&#10022;</a>');
-            pluginPanel = WorkspaceManager.createPluginPanel(EXTENSION_ID + ".panel", $panel, 310, $ico, 500);
-            initUI();
-            pluginPanel.show();
+            loadLang(LANG, function() {
+                $panel = $(buildPanelHTML());
+                var $ico = $('<a href="#" title="Claude AI" style="font-size:15px;color:#cba6f7;text-decoration:none;padding:5px 8px;display:inline-block">&#10022;</a>');
+                pluginPanel = WorkspaceManager.createPluginPanel(EXTENSION_ID + ".panel", $panel, 310, $ico, 500);
+                initUI();
+                pluginPanel.show();
+                updateBtn();
+            });
         } else if (pluginPanel.isVisible()) {
             pluginPanel.hide();
+            updateBtn();
         } else {
-            initUI();
-            pluginPanel.show();
+            loadLang(LANG, function() {
+                initUI();
+                pluginPanel.show();
+                updateBtn();
+            });
         }
-        var $btn = $("#claude-sidebar-btn");
-        $btn.css("border-left", (pluginPanel && pluginPanel.isVisible()) ? "2px solid #cba6f7" : "2px solid transparent");
     }
 
     AppInit.appReady(function() {
