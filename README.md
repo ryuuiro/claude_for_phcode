@@ -32,14 +32,9 @@ Sigue los pasos en pantalla para iniciar sesión. Solo necesitas hacerlo una vez
 
 ## Instalación
 
-1. Descarga la carpeta `claude-for-phcode`
-2. Cópiala a la carpeta de extensiones de Phoenix Code:
-   ```
-   C:\Users\TuUsuario\AppData\Local\io.phcode\assets\extensions\user\
-   ```
-3. Reinicia Phoenix Code
+Busca **"Claude AI Assistant"** en el Extension Manager de Phoenix Code e instálalo con un clic.
 
-> También puedes cargarla con **Debug → Load Project As Extension** seleccionando la carpeta.
+> **Desarrolladores:** Para probar cambios locales, usa **Debug → Load Project As Extension** seleccionando la carpeta del repositorio.
 
 ---
 
