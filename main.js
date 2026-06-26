@@ -29,9 +29,37 @@ define(function (require, exports, module) {
 
     // ── Language ───────────────────────────────────────────────────────────
     var SUPPORTED_LANGS = [
-        { code: "es", label: "Español" },
-        { code: "en", label: "English" },
-        { code: "ja", label: "日本語"  }
+        { code: "bg",    label: "Български"           },
+        { code: "cs",    label: "Čeština"             },
+        { code: "da",    label: "Dansk"               },
+        { code: "de",    label: "Deutsch"             },
+        { code: "el",    label: "Ελληνικά"            },
+        { code: "en",    label: "English"             },
+        { code: "es",    label: "Español"             },
+        { code: "fa",    label: "فارسی"               },
+        { code: "fi",    label: "Suomi"               },
+        { code: "fr",    label: "Français"            },
+        { code: "gl",    label: "Galego"              },
+        { code: "hr",    label: "Hrvatski"            },
+        { code: "hu",    label: "Magyar"              },
+        { code: "id",    label: "Bahasa Indonesia"    },
+        { code: "it",    label: "Italiano"            },
+        { code: "ja",    label: "日本語"              },
+        { code: "ko",    label: "한국어"              },
+        { code: "nb",    label: "Norsk Bokmål"        },
+        { code: "nl",    label: "Nederlands"          },
+        { code: "pl",    label: "Polski"              },
+        { code: "pt-br", label: "Português (Brasil)"  },
+        { code: "ro",    label: "Română"              },
+        { code: "ru",    label: "Русский"             },
+        { code: "sk",    label: "Slovenčina"          },
+        { code: "sl",    label: "Slovenščina"         },
+        { code: "sr",    label: "Srpski"              },
+        { code: "sv",    label: "Svenska"             },
+        { code: "tr",    label: "Türkçe"              },
+        { code: "uk",    label: "Українська"          },
+        { code: "zh-cn", label: "中文（简体）"        },
+        { code: "zh-tw", label: "中文（繁體）"        }
     ];
     var LANGS = {};
     var LANG  = "en";
