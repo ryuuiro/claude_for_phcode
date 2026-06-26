@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Proje: ",
         promptActiveFile:     "Aktif dosya: ",
         promptCodeFrom:       "Kod kaynağı: ",
-        editPreviewTitle:     "Değişiklikleri önizle",
-        editPreviewApply:     "Uygula"
+        editPreviewTitle:          "Değişiklikleri önizle",
+        editPreviewApply:          "Uygula",
+        newConversationConfirm:    "Yeni bir sohbet başlatılsın mı? Mevcut geçmiş silinecek."
     };
 });

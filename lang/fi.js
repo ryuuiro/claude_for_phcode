@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Projekti: ",
         promptActiveFile:     "Aktiivinen tiedosto: ",
         promptCodeFrom:       "Koodi tiedostosta ",
-        editPreviewTitle:     "Esikatsele muutokset",
-        editPreviewApply:     "Käytä"
+        editPreviewTitle:          "Esikatsele muutokset",
+        editPreviewApply:          "Käytä",
+        newConversationConfirm:    "Aloita uusi keskustelu? Nykyinen historia poistetaan."
     };
 });

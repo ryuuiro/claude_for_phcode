@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Prosjekt: ",
         promptActiveFile:     "Aktiv fil: ",
         promptCodeFrom:       "Kode fra ",
-        editPreviewTitle:     "Forhåndsvis endringer",
-        editPreviewApply:     "Bruk"
+        editPreviewTitle:          "Forhåndsvis endringer",
+        editPreviewApply:          "Bruk",
+        newConversationConfirm:    "Starte en ny samtale? Gjeldende historikk vil bli slettet."
     };
 });

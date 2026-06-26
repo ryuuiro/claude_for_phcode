@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "پروژه: ",
         promptActiveFile:     "فایل فعال: ",
         promptCodeFrom:       "کد از ",
-        editPreviewTitle:     "پیش‌نمایش تغییرات",
-        editPreviewApply:     "اعمال"
+        editPreviewTitle:          "پیش‌نمایش تغییرات",
+        editPreviewApply:          "اعمال",
+        newConversationConfirm:    "آیا مکالمه جدیدی شروع شود؟ تاریخچه فعلی پاک خواهد شد."
     };
 });

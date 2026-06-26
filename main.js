@@ -554,9 +554,12 @@ define(function (require, exports, module) {
         $panel.find("#clai-btn-git").off("click").on("click", function() { setMode("git"); });
 
         $panel.find("#clai-btn-new").off("click").on("click", function() {
+            var $msgs    = $panel.find("#clai-messages");
+            var hasMessages = $msgs.find("#clai-welcome").is(":hidden") || $msgs.children().length > 1;
+            if (hasMessages && !confirm(t("newConversationConfirm"))) return;
             SESSION_ID = "session_" + Date.now();
             callNode("clearHistory", { sessionId: SESSION_ID }).catch(function(){});
-            $panel.find("#clai-messages").html(buildWelcomeHTML());
+            $msgs.html(buildWelcomeHTML());
             setCtx(null);
         });
 

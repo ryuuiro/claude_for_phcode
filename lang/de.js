@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Projekt: ",
         promptActiveFile:     "Aktive Datei: ",
         promptCodeFrom:       "Code aus ",
-        editPreviewTitle:     "Vorschau der Änderungen",
-        editPreviewApply:     "Anwenden"
+        editPreviewTitle:          "Vorschau der Änderungen",
+        editPreviewApply:          "Anwenden",
+        newConversationConfirm:    "Neues Gespräch starten? Der aktuelle Verlauf wird gelöscht."
     };
 });

@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Projekt: ",
         promptActiveFile:     "Aktivna datoteka: ",
         promptCodeFrom:       "Koda iz ",
-        editPreviewTitle:     "Predogled sprememb",
-        editPreviewApply:     "Uporabi"
+        editPreviewTitle:          "Predogled sprememb",
+        editPreviewApply:          "Uporabi",
+        newConversationConfirm:    "Začeti nov pogovor? Trenutna zgodovina bo izbrisana."
     };
 });

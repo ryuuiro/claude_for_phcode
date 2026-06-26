@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Projet : ",
         promptActiveFile:     "Fichier actif : ",
         promptCodeFrom:       "Code de ",
-        editPreviewTitle:     "Aperçu des modifications",
-        editPreviewApply:     "Appliquer"
+        editPreviewTitle:          "Aperçu des modifications",
+        editPreviewApply:          "Appliquer",
+        newConversationConfirm:    "Démarrer une nouvelle conversation ? L'historique actuel sera effacé."
     };
 });

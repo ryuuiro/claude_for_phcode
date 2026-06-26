@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "프로젝트: ",
         promptActiveFile:     "활성 파일: ",
         promptCodeFrom:       "코드 출처: ",
-        editPreviewTitle:     "변경 사항 미리보기",
-        editPreviewApply:     "적용"
+        editPreviewTitle:          "변경 사항 미리보기",
+        editPreviewApply:          "적용",
+        newConversationConfirm:    "새 대화를 시작하시겠습니까? 현재 기록이 지워집니다."
     };
 });

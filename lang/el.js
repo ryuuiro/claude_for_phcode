@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Έργο: ",
         promptActiveFile:     "Ενεργό αρχείο: ",
         promptCodeFrom:       "Κώδικας από ",
-        editPreviewTitle:     "Προεπισκόπηση αλλαγών",
-        editPreviewApply:     "Εφαρμογή"
+        editPreviewTitle:          "Προεπισκόπηση αλλαγών",
+        editPreviewApply:          "Εφαρμογή",
+        newConversationConfirm:    "Έναρξη νέας συνομιλίας; Η τρέχουσα θα διαγραφεί."
     };
 });

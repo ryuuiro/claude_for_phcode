@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "專案：",
         promptActiveFile:     "目前檔案：",
         promptCodeFrom:       "來自 ",
-        editPreviewTitle:     "預覽變更",
-        editPreviewApply:     "套用"
+        editPreviewTitle:          "預覽變更",
+        editPreviewApply:          "套用",
+        newConversationConfirm:    "開始新對話？目前的歷史記錄將被清除。"
     };
 });

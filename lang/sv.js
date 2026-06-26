@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Projekt: ",
         promptActiveFile:     "Aktiv fil: ",
         promptCodeFrom:       "Kod från ",
-        editPreviewTitle:     "Förhandsvisa ändringar",
-        editPreviewApply:     "Tillämpa"
+        editPreviewTitle:          "Förhandsvisa ändringar",
+        editPreviewApply:          "Tillämpa",
+        newConversationConfirm:    "Starta en ny konversation? Nuvarande historik rensas."
     };
 });

@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Progetto: ",
         promptActiveFile:     "File attivo: ",
         promptCodeFrom:       "Codice da ",
-        editPreviewTitle:     "Anteprima modifiche",
-        editPreviewApply:     "Applica"
+        editPreviewTitle:          "Anteprima modifiche",
+        editPreviewApply:          "Applica",
+        newConversationConfirm:    "Iniziare una nuova conversazione? La cronologia attuale verrà cancellata."
     };
 });

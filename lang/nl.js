@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Project: ",
         promptActiveFile:     "Actief bestand: ",
         promptCodeFrom:       "Code uit ",
-        editPreviewTitle:     "Wijzigingen bekijken",
-        editPreviewApply:     "Toepassen"
+        editPreviewTitle:          "Wijzigingen bekijken",
+        editPreviewApply:          "Toepassen",
+        newConversationConfirm:    "Nieuw gesprek starten? De huidige geschiedenis wordt gewist."
     };
 });

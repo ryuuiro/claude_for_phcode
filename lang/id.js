@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Proyek: ",
         promptActiveFile:     "File aktif: ",
         promptCodeFrom:       "Kode dari ",
-        editPreviewTitle:     "Pratinjau perubahan",
-        editPreviewApply:     "Terapkan"
+        editPreviewTitle:          "Pratinjau perubahan",
+        editPreviewApply:          "Terapkan",
+        newConversationConfirm:    "Mulai percakapan baru? Riwayat saat ini akan dihapus."
     };
 });

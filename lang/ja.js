@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "プロジェクト: ",
         promptActiveFile:     "アクティブファイル: ",
         promptCodeFrom:       "コード（",
-        editPreviewTitle:     "変更のプレビュー",
-        editPreviewApply:     "適用"
+        editPreviewTitle:          "変更のプレビュー",
+        editPreviewApply:          "適用",
+        newConversationConfirm:    "新しい会話を開始しますか？現在の履歴が消去されます。"
     };
 });

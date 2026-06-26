@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Projekt: ",
         promptActiveFile:     "Aktivní soubor: ",
         promptCodeFrom:       "Kód z ",
-        editPreviewTitle:     "Náhled změn",
-        editPreviewApply:     "Použít"
+        editPreviewTitle:          "Náhled změn",
+        editPreviewApply:          "Použít",
+        newConversationConfirm:    "Zahájit nový rozhovor? Aktuální bude smazán."
     };
 });

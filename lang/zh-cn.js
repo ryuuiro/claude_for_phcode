@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "项目：",
         promptActiveFile:     "当前文件：",
         promptCodeFrom:       "来自 ",
-        editPreviewTitle:     "预览更改",
-        editPreviewApply:     "应用"
+        editPreviewTitle:          "预览更改",
+        editPreviewApply:          "应用",
+        newConversationConfirm:    "开始新对话？当前历史记录将被清除。"
     };
 });

@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Project: ",
         promptActiveFile:     "Active file: ",
         promptCodeFrom:       "Code from ",
-        editPreviewTitle:     "Preview changes",
-        editPreviewApply:     "Apply"
+        editPreviewTitle:          "Preview changes",
+        editPreviewApply:          "Apply",
+        newConversationConfirm:    "Start a new conversation? Current history will be cleared."
     };
 });

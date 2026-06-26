@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Проект: ",
         promptActiveFile:     "Активний файл: ",
         promptCodeFrom:       "Код з ",
-        editPreviewTitle:     "Попередній перегляд змін",
-        editPreviewApply:     "Застосувати"
+        editPreviewTitle:          "Попередній перегляд змін",
+        editPreviewApply:          "Застосувати",
+        newConversationConfirm:    "Почати нову розмову? Поточна історія буде очищена."
     };
 });

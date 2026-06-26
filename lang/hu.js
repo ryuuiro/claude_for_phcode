@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Projekt: ",
         promptActiveFile:     "Aktív fájl: ",
         promptCodeFrom:       "Kód innen: ",
-        editPreviewTitle:     "Változtatások előnézete",
-        editPreviewApply:     "Alkalmaz"
+        editPreviewTitle:          "Változtatások előnézete",
+        editPreviewApply:          "Alkalmaz",
+        newConversationConfirm:    "Új beszélgetés indítása? Az aktuális előzmények törlődnek."
     };
 });

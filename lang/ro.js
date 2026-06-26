@@ -93,7 +93,8 @@ define(function () {
         promptProject:        "Proiect: ",
         promptActiveFile:     "Fișier activ: ",
         promptCodeFrom:       "Cod din ",
-        editPreviewTitle:     "Previzualizare modificări",
-        editPreviewApply:     "Aplică"
+        editPreviewTitle:          "Previzualizare modificări",
+        editPreviewApply:          "Aplică",
+        newConversationConfirm:    "Porniți o conversație nouă? Istoricul curent va fi șters."
     };
 });
