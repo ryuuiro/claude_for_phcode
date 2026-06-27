@@ -1,7 +1,7 @@
 # ✦ Claude AI Assistant para Phoenix Code
 
 **Autor:** Erik Dávila
-**Versión:** 2.5.5
+**Versión:** 2.5.6
 **Requiere:** Phoenix Code Desktop + Claude Code CLI instalado
 
 ---
@@ -94,6 +94,8 @@ Claude recibirá tu pregunta junto con el código adjunto como contexto.
 | `Ctrl + Shift + B` | Buscar y corregir errores en selección |
 
 **Botón "Nueva":** Limpia el historial y empieza una conversación nueva desde cero.
+
+**Selector de idioma:** Haz clic en el botón **⋮** (esquina superior derecha del panel) → **Idioma** para elegir entre 31 idiomas disponibles. La selección se guarda automáticamente. Si nunca lo cambias, la extensión usa el idioma configurado en Phoenix Code; si ese idioma no está disponible, usa inglés por defecto.
 
 ---
 
@@ -191,6 +193,10 @@ No, requiere la **versión Desktop** (app de escritorio) porque necesita acceso 
 claude-for-phcode/
 ├── main.js          ← Panel del editor (interfaz)
 ├── package.json     ← Configuración de la extensión
+├── lang/            ← Traducciones (31 idiomas)
+│   ├── en.js
+│   ├── es.js
+│   └── ...
 └── node/
     ├── index.js     ← Backend Node.js (Claude CLI, archivos, git)
     └── package.json
