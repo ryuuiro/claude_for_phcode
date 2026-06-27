@@ -300,6 +300,13 @@ exports.git = async function({ action, projectPath, message, strings }) {
     }
 };
 
+exports.readFile = async function({ filePath, projectPath }) {
+    if (!projectPath || !fs.existsSync(projectPath)) return "";
+    const fullPath = path.join(projectPath, filePath.replace(/\//g, path.sep));
+    if (!path.resolve(fullPath).startsWith(path.resolve(projectPath))) return "";
+    try { return fs.readFileSync(fullPath, "utf8"); } catch(e) { return ""; }
+};
+
 exports.clearHistory = async function({ sessionId = "default" }) {
     sessions[sessionId] = [];
     return true;

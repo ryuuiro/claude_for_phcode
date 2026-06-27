@@ -280,7 +280,11 @@ define(function (require, exports, module) {
         text = text.replace(/```(\w*)\n?([\s\S]*?)```/g, function(_, lang, code) {
             var esc = code.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
             var enc = encodeURIComponent(code);
-            return '<div style="position:relative"><pre style="background:#11111b;border:1px solid #313244;border-radius:6px;padding:10px;overflow-x:auto;font-size:11px;margin:6px 0;line-height:1.5"><code style="color:#cdd6f4;font-family:monospace">' + esc + '</code></pre><button class="clai-copy" data-c="' + enc + '" style="position:absolute;top:6px;right:6px;background:#313244;border:1px solid #45475a;color:#a6adc8;border-radius:4px;padding:2px 6px;cursor:pointer;font-size:10px">' + t("copyBtn") + '</button></div>';
+            return '<div style="position:relative"><pre style="background:#11111b;border:1px solid #313244;border-radius:6px;padding:10px;overflow-x:auto;font-size:11px;margin:6px 0;line-height:1.5"><code style="color:#cdd6f4;font-family:monospace">' + esc + '</code></pre>'
+                + '<div style="position:absolute;top:6px;right:6px;display:flex;gap:4px">'
+                + '<button class="clai-apply-code" data-c="' + enc + '" style="background:#1e3a5f;border:1px solid #89b4fa;color:#89b4fa;border-radius:4px;padding:2px 6px;cursor:pointer;font-size:10px">' + t("editPreviewApply") + '</button>'
+                + '<button class="clai-copy" data-c="' + enc + '" style="background:#313244;border:1px solid #45475a;color:#a6adc8;border-radius:4px;padding:2px 6px;cursor:pointer;font-size:10px">' + t("copyBtn") + '</button>'
+                + '</div></div>';
         });
         text = text.replace(/`([^`]+)`/g, '<code style="background:#313244;padding:1px 4px;border-radius:3px;color:#89dceb;font-size:11px">$1</code>');
         text = text.replace(/\*\*(.+?)\*\*/g, '<strong style="color:#f9e2af">$1</strong>');
@@ -382,7 +386,19 @@ define(function (require, exports, module) {
                 setTimeout(function() { $(btn).text(t("copyBtn")); }, 2000);
             });
         });
+        $msg.find(".clai-apply-code").on("click", function() {
+            applyCodeBlock(decodeURIComponent($(this).data("c")));
+        });
         $msgs.scrollTop($msgs[0].scrollHeight);
+    }
+
+    function applyCodeBlock(code) {
+        var rf = getCurrentFileRelative();
+        if (!rf) { alert(t("errOpenFile")); return; }
+        var pp = getProjectPath();
+        callNode("readFile", { filePath: rf, projectPath: pp })
+            .then(function(oldContent) { showDiffPreview({ filePath: rf, oldContent: oldContent, newContent: code }, "apply-code-block", pp); })
+            .catch(function()          { showDiffPreview({ filePath: rf, oldContent: "",         newContent: code }, "apply-code-block", pp); });
     }
 
     function showLoading(msg) {
@@ -678,6 +694,9 @@ define(function (require, exports, module) {
                         $(btn).text(t("copiedBtn"));
                         setTimeout(function() { $(btn).text(t("copyBtn")); }, 2000);
                     });
+                });
+                streamState.$el.on("click", ".clai-apply-code", function() {
+                    applyCodeBlock(decodeURIComponent($(this).data("c")));
                 });
                 $msgs.append(streamState.$el);
             }
