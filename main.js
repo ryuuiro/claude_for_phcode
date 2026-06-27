@@ -515,24 +515,76 @@ define(function (require, exports, module) {
         }
     }
 
+    function showStagePreview(action, commitMsg, pp) {
+        var $msgs = $panel.find("#clai-messages");
+        showLoading(t("loadingStatus"));
+        callNode("git", { action: "status-short", projectPath: pp, strings: getStrings() })
+            .then(function(statusOut) {
+                hideLoading();
+                $msgs.find("#clai-welcome").hide();
+                var lbl = '<span style="color:#cba6f7;font-size:10px;font-weight:700;display:block;margin-bottom:6px">' + t("claudeLabel") + '</span>';
+                var pre = '<pre style="color:#cdd6f4;font-family:monospace;font-size:10px;white-space:pre;margin:0;line-height:1.6">' + escHtml(statusOut || "—") + '</pre>';
+                var $preview = $('<div style="padding:10px 12px;background:#1e1e2e;border:1px solid #cba6f7;border-radius:12px 12px 12px 4px">'
+                    + lbl
+                    + '<div style="color:#a6adc8;font-size:11px;margin-bottom:6px">' + t("gitStageFiles") + '</div>'
+                    + '<div style="background:#11111b;border:1px solid #313244;border-radius:4px;padding:6px;margin-bottom:8px;max-height:150px;overflow-y:auto">' + pre + '</div>'
+                    + '<input class="clai-exclude-input" placeholder="' + t("gitExcludeHint") + '" style="width:100%;box-sizing:border-box;padding:5px 8px;background:#313244;border:1px solid #45475a;border-radius:4px;color:#cdd6f4;font-size:11px;outline:none;margin-bottom:6px">'
+                    + '<div style="display:flex;gap:6px">'
+                    + '<button class="clai-confirm-stage" style="background:#a6e3a1;border:none;color:#1e1e2e;border-radius:4px;padding:4px 12px;cursor:pointer;font-size:11px;font-weight:700">' + t("editPreviewApply") + '</button>'
+                    + '<button class="clai-cancel-stage" style="background:transparent;border:1px solid #f38ba8;color:#f38ba8;border-radius:4px;padding:4px 12px;cursor:pointer;font-size:11px">' + t("cancelBtn") + '</button>'
+                    + '</div></div>');
+
+                function doGitCommit() {
+                    var raw      = $preview.find(".clai-exclude-input").val();
+                    var excludes = raw ? raw.split(/[\s,]+/).filter(function(s) { return s.trim(); }) : [];
+                    $preview.find(".clai-confirm-stage, .clai-cancel-stage").prop("disabled", true).css("opacity", "0.5");
+                    $preview.find(".clai-exclude-input").prop("disabled", true).css("opacity", "0.5");
+                    showLoading(action === "smart-commit" ? t("loadingSmartCommit") : t("loadingCommit"));
+                    callNode("git", { action: action, projectPath: pp, message: commitMsg, excludes: excludes, strings: getStrings() })
+                        .then(function(r) {
+                            hideLoading();
+                            if (action === "commit") $panel.find("#clai-commit-msg").val("");
+                            appendMessage("assistant", "**git " + action + ":**\n\n```\n" + r + "\n```");
+                        })
+                        .catch(function(e) { hideLoading(); appendMessage("assistant", t("gitErrPrefix") + e.message, true); });
+                }
+
+                $preview.find(".clai-confirm-stage").on("click", doGitCommit);
+                $preview.find(".clai-exclude-input").on("keydown", function(e) {
+                    if (e.keyCode === 13) doGitCommit();
+                });
+                $preview.find(".clai-cancel-stage").on("click", function() {
+                    $preview.find(".clai-confirm-stage, .clai-cancel-stage, .clai-exclude-input").remove();
+                    $preview.append('<div style="color:#6c7086;font-size:11px;margin-top:6px">' + t("cancelled") + '</div>');
+                });
+
+                $msgs.append($preview);
+                $msgs.scrollTop($msgs[0].scrollHeight);
+            })
+            .catch(function(e) {
+                hideLoading();
+                appendMessage("assistant", t("gitErrPrefix") + e.message, true);
+            });
+    }
+
     function runGitAction(action) {
         var pp = getProjectPath();
         if (!pp) { appendMessage("assistant", t("errNoProject"), true); return; }
         if (action === "commit") {
             var msg = $panel.find("#clai-commit-msg").val().trim();
             if (!msg) { alert(t("errCommitMsg")); return; }
-            showLoading(t("loadingCommit"));
-            callNode("git", { action: "commit", projectPath: pp, message: msg, strings: getStrings() })
-                .then(function(r) { hideLoading(); $panel.find("#clai-commit-msg").val(""); appendMessage("assistant", "**Commit:**\n\n```\n" + r + "\n```"); })
-                .catch(function(e) { hideLoading(); appendMessage("assistant", t("gitErrPrefix") + e.message, true); });
+            showStagePreview("commit", msg, pp);
+            return;
+        }
+        if (action === "smart-commit") {
+            showStagePreview("smart-commit", null, pp);
             return;
         }
         var labels = {
-            status:         t("loadingStatus"),
-            log:            t("loadingLog"),
-            diff:           t("loadingDiff"),
-            "smart-commit": t("loadingSmartCommit"),
-            push:           t("loadingPush")
+            status: t("loadingStatus"),
+            log:    t("loadingLog"),
+            diff:   t("loadingDiff"),
+            push:   t("loadingPush")
         };
         showLoading(labels[action] || action);
         callNode("git", { action: action, projectPath: pp, strings: getStrings() })

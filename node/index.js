@@ -270,19 +270,30 @@ exports.applyEdit = async function({ filePath, projectPath, newContent, instruct
     return p.editDone + filePath;
 };
 
-exports.git = async function({ action, projectPath, message, strings }) {
+exports.git = async function({ action, projectPath, message, excludes, strings }) {
     const p = strings || {};
     if (!projectPath) throw new Error(p.beErrNoProject);
 
+    async function unstageExcludes(excl) {
+        if (!excl || !excl.length) return;
+        for (const f of excl) {
+            const clean = f.trim();
+            if (clean) await runGit('restore --staged "' + clean.replace(/"/g, '\\"') + '"', projectPath).catch(() => {});
+        }
+    }
+
     switch(action) {
-        case "status": return await runGit("status", projectPath);
-        case "log":    return await runGit("log --oneline -10", projectPath);
-        case "diff":   return await runGit("diff", projectPath);
-        case "push":   return await runGit("push", projectPath);
-        case "commit":
+        case "status":       return await runGit("status", projectPath);
+        case "status-short": return await runGit("status --short", projectPath);
+        case "log":          return await runGit("log --oneline -10", projectPath);
+        case "diff":         return await runGit("diff", projectPath);
+        case "push":         return await runGit("push", projectPath);
+        case "commit": {
             if (!message) throw new Error(p.beErrNoCommitMsg);
             await runGit("add .", projectPath);
+            await unstageExcludes(excludes);
             return await runGit('commit -m "' + message.replace(/"/g, '\\"') + '"', projectPath);
+        }
         case "smart-commit": {
             const status   = await runGit("status", projectPath);
             const diff     = await runGit("diff", projectPath).catch(() => "");
@@ -292,6 +303,7 @@ exports.git = async function({ action, projectPath, message, strings }) {
             );
             const cleanMsg = msg.trim().split("\n")[0];
             await runGit("add .", projectPath);
+            await unstageExcludes(excludes);
             const result   = await runGit('commit -m "' + cleanMsg.replace(/"/g, '\\"') + '"', projectPath);
             return p.commitPrefix + cleanMsg + "\n\n" + result;
         }

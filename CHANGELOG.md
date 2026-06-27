@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.5.6] - 2026-06-27
+### Added
+- Vista previa de cambios (diff) en modo Edit antes de aplicar: Claude muestra las líneas añadidas (verde) y eliminadas (rojo) con botones "Aplicar" / "Cancelar"
+- Confirmación antes de iniciar nueva conversación con el botón "Nueva" — evita borrar el historial por accidente
+- Streaming de respuestas en el chat: el texto de Claude aparece progresivamente mientras se genera, sin esperar a que termine
+- Botón "Aplicar" en cada bloque de código del chat: permite insertar el código sugerido directamente en el archivo activo mostrando el diff preview antes de escribir al disco
+- Vista previa de archivos a stagear antes de commit y auto-commit, con campo para excluir archivos específicos (espacio o coma entre nombres, Enter para continuar)
+### Changed
+- Modo Edit ahora usa `previewEdit` + `applyEdit` en lugar de `editFile` directo — el usuario aprueba los cambios antes de que se escriban al disco
+- El diálogo de "Nueva conversación" solo aparece cuando hay mensajes en el historial (no al abrir el panel vacío)
+### Fixed
+- El botón "Nueva" no mostraba el diálogo de confirmación correctamente cuando el historial ya estaba limpio
+
 ## [2.5.5] - 2026-06-26
 ### Added
 - Soporte multilingüe completo: 31 idiomas disponibles (bg, cs, da, de, el, en, es, fa, fi, fr, gl, hr, hu, id, it, ja, ko, nb, nl, pl, pt-br, ro, ru, sk, sl, sr, sv, tr, uk, zh-cn, zh-tw)

@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Code from ",
         editPreviewTitle:          "Preview changes",
         editPreviewApply:          "Apply",
-        newConversationConfirm:    "Start a new conversation? Current history will be cleared."
+        newConversationConfirm:    "Start a new conversation? Current history will be cleared.",
+        gitStageFiles:             "Files to be staged:",
+        gitExcludeHint:            "Exclude files? (space or comma, Enter to continue)"
     };
 });
