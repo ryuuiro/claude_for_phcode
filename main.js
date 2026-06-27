@@ -554,13 +554,27 @@ define(function (require, exports, module) {
         $panel.find("#clai-btn-git").off("click").on("click", function() { setMode("git"); });
 
         $panel.find("#clai-btn-new").off("click").on("click", function() {
+            const Dialogs = brackets.getModule("widgets/Dialogs");
             var $msgs    = $panel.find("#clai-messages");
             var hasMessages = $msgs.find("#clai-welcome").is(":hidden") || $msgs.children().length > 1;
-            if (hasMessages && !confirm(t("newConversationConfirm"))) return;
-            SESSION_ID = "session_" + Date.now();
-            callNode("clearHistory", { sessionId: SESSION_ID }).catch(function(){});
-            $msgs.html(buildWelcomeHTML());
-            setCtx(null);
+
+            function doNewConversation() {
+                SESSION_ID = "session_" + Date.now();
+                callNode("clearHistory", { sessionId: SESSION_ID }).catch(function(){});
+                $msgs.html(buildWelcomeHTML());
+                setCtx(null);
+            }
+
+            if (hasMessages) {
+                Dialogs.showConfirmDialog(
+                    t("newConversation"),
+                    t("newConversationConfirm")
+                ).done(function (buttonId) {
+                    if (buttonId === Dialogs.DIALOG_BTN_OK) {
+                        doNewConversation();
+                    }
+                });
+            }
         });
 
         // ⋮ menu
