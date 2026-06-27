@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Kod från ",
         editPreviewTitle:          "Förhandsvisa ändringar",
         editPreviewApply:          "Tillämpa",
-        newConversationConfirm:    "Starta en ny konversation? Nuvarande historik rensas."
+        newConversationConfirm:    "Starta en ny konversation? Nuvarande historik rensas.",
+        gitStageFiles:             "Filer att stage:",
+        gitExcludeHint:            "Uteslut filer? (mellanslag eller komma, Enter för att fortsätta)"
     };
 });

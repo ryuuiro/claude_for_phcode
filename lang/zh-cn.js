@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "来自 ",
         editPreviewTitle:          "预览更改",
         editPreviewApply:          "应用",
-        newConversationConfirm:    "开始新对话？当前历史记录将被清除。"
+        newConversationConfirm:    "开始新对话？当前历史记录将被清除。",
+        gitStageFiles:             "将要暂存的文件：",
+        gitExcludeHint:            "排除文件？（空格或逗号分隔，Enter 继续）"
     };
 });

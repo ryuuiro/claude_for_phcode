@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Kode fra ",
         editPreviewTitle:          "Forhåndsvis endringer",
         editPreviewApply:          "Bruk",
-        newConversationConfirm:    "Starte en ny samtale? Gjeldende historikk vil bli slettet."
+        newConversationConfirm:    "Starte en ny samtale? Gjeldende historikk vil bli slettet.",
+        gitStageFiles:             "Filer som skal stages:",
+        gitExcludeHint:            "Utelat filer? (mellomrom eller komma, Enter for å fortsette)"
     };
 });

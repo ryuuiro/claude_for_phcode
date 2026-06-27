@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Code aus ",
         editPreviewTitle:          "Vorschau der Änderungen",
         editPreviewApply:          "Anwenden",
-        newConversationConfirm:    "Neues Gespräch starten? Der aktuelle Verlauf wird gelöscht."
+        newConversationConfirm:    "Neues Gespräch starten? Der aktuelle Verlauf wird gelöscht.",
+        gitStageFiles:             "Dateien zum Stagen:",
+        gitExcludeHint:            "Dateien ausschließen? (Leerzeichen oder Komma, Enter zum Fortfahren)"
     };
 });

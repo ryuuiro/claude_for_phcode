@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Kod kaynağı: ",
         editPreviewTitle:          "Değişiklikleri önizle",
         editPreviewApply:          "Uygula",
-        newConversationConfirm:    "Yeni bir sohbet başlatılsın mı? Mevcut geçmiş silinecek."
+        newConversationConfirm:    "Yeni bir sohbet başlatılsın mı? Mevcut geçmiş silinecek.",
+        gitStageFiles:             "Stage edilecek dosyalar:",
+        gitExcludeHint:            "Dosyaları dışla? (boşluk veya virgül, Enter ile devam)"
     };
 });

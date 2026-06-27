@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Code de ",
         editPreviewTitle:          "Aperçu des modifications",
         editPreviewApply:          "Appliquer",
-        newConversationConfirm:    "Démarrer une nouvelle conversation ? L'historique actuel sera effacé."
+        newConversationConfirm:    "Démarrer une nouvelle conversation ? L'historique actuel sera effacé.",
+        gitStageFiles:             "Fichiers à ajouter à l'index :",
+        gitExcludeHint:            "Exclure des fichiers ? (espace ou virgule, Entrée pour continuer)"
     };
 });

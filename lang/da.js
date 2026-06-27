@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Kode fra ",
         editPreviewTitle:          "Forhåndsvis ændringer",
         editPreviewApply:          "Anvend",
-        newConversationConfirm:    "Starte en ny samtale? Den nuværende slettes."
+        newConversationConfirm:    "Starte en ny samtale? Den nuværende slettes.",
+        gitStageFiles:             "Filer der skal stages:",
+        gitExcludeHint:            "Udeluk filer? (mellemrum eller komma, Enter for at fortsætte)"
     };
 });

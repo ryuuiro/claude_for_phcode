@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Kode dari ",
         editPreviewTitle:          "Pratinjau perubahan",
         editPreviewApply:          "Terapkan",
-        newConversationConfirm:    "Mulai percakapan baru? Riwayat saat ini akan dihapus."
+        newConversationConfirm:    "Mulai percakapan baru? Riwayat saat ini akan dihapus.",
+        gitStageFiles:             "File yang akan di-stage:",
+        gitExcludeHint:            "Kecualikan file? (spasi atau koma, Enter untuk lanjut)"
     };
 });

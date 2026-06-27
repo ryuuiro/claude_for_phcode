@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Cod din ",
         editPreviewTitle:          "Previzualizare modificări",
         editPreviewApply:          "Aplică",
-        newConversationConfirm:    "Porniți o conversație nouă? Istoricul curent va fi șters."
+        newConversationConfirm:    "Porniți o conversație nouă? Istoricul curent va fi șters.",
+        gitStageFiles:             "Fișiere de adăugat:",
+        gitExcludeHint:            "Excludeți fișiere? (spațiu sau virgulă, Enter pentru a continua)"
     };
 });

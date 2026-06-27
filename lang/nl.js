@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Code uit ",
         editPreviewTitle:          "Wijzigingen bekijken",
         editPreviewApply:          "Toepassen",
-        newConversationConfirm:    "Nieuw gesprek starten? De huidige geschiedenis wordt gewist."
+        newConversationConfirm:    "Nieuw gesprek starten? De huidige geschiedenis wordt gewist.",
+        gitStageFiles:             "Te stagen bestanden:",
+        gitExcludeHint:            "Bestanden uitsluiten? (spatie of komma, Enter om door te gaan)"
     };
 });

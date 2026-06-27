@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Кôд из ",
         editPreviewTitle:          "Преглед измена",
         editPreviewApply:          "Примени",
-        newConversationConfirm:    "Покренути нови разговор? Тренутна историја ће бити обрисана."
+        newConversationConfirm:    "Покренути нови разговор? Тренутна историја ће бити обрисана.",
+        gitStageFiles:             "Датотеке за stage:",
+        gitExcludeHint:            "Искључи датотеке? (размак или зарез, Enter за наставак)"
     };
 });

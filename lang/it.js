@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Codice da ",
         editPreviewTitle:          "Anteprima modifiche",
         editPreviewApply:          "Applica",
-        newConversationConfirm:    "Iniziare una nuova conversazione? La cronologia attuale verrà cancellata."
+        newConversationConfirm:    "Iniziare una nuova conversazione? La cronologia attuale verrà cancellata.",
+        gitStageFiles:             "File da aggiungere all'indice:",
+        gitExcludeHint:            "Escludere file? (spazio o virgola, Invio per continuare)"
     };
 });

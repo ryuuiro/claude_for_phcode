@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Код от ",
         editPreviewTitle:          "Преглед на промените",
         editPreviewApply:          "Приложи",
-        newConversationConfirm:    "Започнете нов разговор? Текущият ще бъде изтрит."
+        newConversationConfirm:    "Започнете нов разговор? Текущият ще бъде изтрит.",
+        gitStageFiles:             "Файлове за добавяне:",
+        gitExcludeHint:            "Изключи файлове? (интервал или запетая, Enter за продължаване)"
     };
 });

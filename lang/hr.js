@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Kôd iz ",
         editPreviewTitle:          "Pregled izmjena",
         editPreviewApply:          "Primijeni",
-        newConversationConfirm:    "Pokrenuti novi razgovor? Trenutna povijest bit će obrisana."
+        newConversationConfirm:    "Pokrenuti novi razgovor? Trenutna povijest bit će obrisana.",
+        gitStageFiles:             "Datoteke za stage:",
+        gitExcludeHint:            "Isključi datoteke? (razmak ili zarez, Enter za nastavak)"
     };
 });

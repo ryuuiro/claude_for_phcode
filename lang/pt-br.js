@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Código de ",
         editPreviewTitle:          "Pré-visualizar alterações",
         editPreviewApply:          "Aplicar",
-        newConversationConfirm:    "Iniciar nova conversa? O histórico atual será apagado."
+        newConversationConfirm:    "Iniciar nova conversa? O histórico atual será apagado.",
+        gitStageFiles:             "Arquivos para stage:",
+        gitExcludeHint:            "Excluir arquivos? (espaço ou vírgula, Enter para continuar)"
     };
 });

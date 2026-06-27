@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Kód z ",
         editPreviewTitle:          "Náhľad zmien",
         editPreviewApply:          "Použiť",
-        newConversationConfirm:    "Začať novú konverzáciu? Aktuálna história bude vymazaná."
+        newConversationConfirm:    "Začať novú konverzáciu? Aktuálna história bude vymazaná.",
+        gitStageFiles:             "Súbory na stage:",
+        gitExcludeHint:            "Vylúčiť súbory? (medzera alebo čiarka, Enter pre pokračovanie)"
     };
 });

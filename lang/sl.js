@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Koda iz ",
         editPreviewTitle:          "Predogled sprememb",
         editPreviewApply:          "Uporabi",
-        newConversationConfirm:    "Začeti nov pogovor? Trenutna zgodovina bo izbrisana."
+        newConversationConfirm:    "Začeti nov pogovor? Trenutna zgodovina bo izbrisana.",
+        gitStageFiles:             "Datoteke za stage:",
+        gitExcludeHint:            "Izključi datoteke? (presledek ali vejica, Enter za nadaljevanje)"
     };
 });

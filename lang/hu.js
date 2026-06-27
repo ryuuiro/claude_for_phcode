@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Kód innen: ",
         editPreviewTitle:          "Változtatások előnézete",
         editPreviewApply:          "Alkalmaz",
-        newConversationConfirm:    "Új beszélgetés indítása? Az aktuális előzmények törlődnek."
+        newConversationConfirm:    "Új beszélgetés indítása? Az aktuális előzmények törlődnek.",
+        gitStageFiles:             "Fájlok stage-eléshez:",
+        gitExcludeHint:            "Kizárandó fájlok? (szóköz vagy vessző, Enter a folytatáshoz)"
     };
 });

@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Koodi tiedostosta ",
         editPreviewTitle:          "Esikatsele muutokset",
         editPreviewApply:          "Käytä",
-        newConversationConfirm:    "Aloita uusi keskustelu? Nykyinen historia poistetaan."
+        newConversationConfirm:    "Aloita uusi keskustelu? Nykyinen historia poistetaan.",
+        gitStageFiles:             "Tiedostot stagettavaksi:",
+        gitExcludeHint:            "Sulje pois tiedostoja? (välilyönti tai pilkku, Enter jatkaaksesi)"
     };
 });

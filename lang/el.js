@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Κώδικας από ",
         editPreviewTitle:          "Προεπισκόπηση αλλαγών",
         editPreviewApply:          "Εφαρμογή",
-        newConversationConfirm:    "Έναρξη νέας συνομιλίας; Η τρέχουσα θα διαγραφεί."
+        newConversationConfirm:    "Έναρξη νέας συνομιλίας; Η τρέχουσα θα διαγραφεί.",
+        gitStageFiles:             "Αρχεία για stage:",
+        gitExcludeHint:            "Εξαίρεση αρχείων; (κενό ή κόμμα, Enter για συνέχεια)"
     };
 });

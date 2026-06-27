@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "코드 출처: ",
         editPreviewTitle:          "변경 사항 미리보기",
         editPreviewApply:          "적용",
-        newConversationConfirm:    "새 대화를 시작하시겠습니까? 현재 기록이 지워집니다."
+        newConversationConfirm:    "새 대화를 시작하시겠습니까? 현재 기록이 지워집니다.",
+        gitStageFiles:             "스테이징할 파일:",
+        gitExcludeHint:            "파일 제외? (공백 또는 쉼표, Enter로 계속)"
     };
 });

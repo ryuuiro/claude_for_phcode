@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "کد از ",
         editPreviewTitle:          "پیش‌نمایش تغییرات",
         editPreviewApply:          "اعمال",
-        newConversationConfirm:    "آیا مکالمه جدیدی شروع شود؟ تاریخچه فعلی پاک خواهد شد."
+        newConversationConfirm:    "آیا مکالمه جدیدی شروع شود؟ تاریخچه فعلی پاک خواهد شد.",
+        gitStageFiles:             "فایل‌های آماده برای stage:",
+        gitExcludeHint:            "حذف فایل‌ها؟ (فاصله یا ویرگول، Enter برای ادامه)"
     };
 });

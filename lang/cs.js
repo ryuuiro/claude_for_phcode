@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Kód z ",
         editPreviewTitle:          "Náhled změn",
         editPreviewApply:          "Použít",
-        newConversationConfirm:    "Zahájit nový rozhovor? Aktuální bude smazán."
+        newConversationConfirm:    "Zahájit nový rozhovor? Aktuální bude smazán.",
+        gitStageFiles:             "Soubory ke stagování:",
+        gitExcludeHint:            "Vyloučit soubory? (mezera nebo čárka, Enter pro pokračování)"
     };
 });

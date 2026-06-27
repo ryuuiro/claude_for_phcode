@@ -95,6 +95,8 @@ define(function () {
         promptCodeFrom:       "Kod z ",
         editPreviewTitle:          "Podgląd zmian",
         editPreviewApply:          "Zastosuj",
-        newConversationConfirm:    "Rozpocząć nową rozmowę? Bieżąca historia zostanie wyczyszczona."
+        newConversationConfirm:    "Rozpocząć nową rozmowę? Bieżąca historia zostanie wyczyszczona.",
+        gitStageFiles:             "Pliki do stage'owania:",
+        gitExcludeHint:            "Wykluczyć pliki? (spacja lub przecinek, Enter aby kontynuować)"
     };
 });
