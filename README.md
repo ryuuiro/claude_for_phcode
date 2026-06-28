@@ -101,7 +101,7 @@ Claude recibirá tu pregunta junto con el código adjunto como contexto.
 
 ### ✏️ Modo Editar
 
-Sirve para que Claude **modifique directamente un archivo** de tu proyecto en disco. No necesitas copiar y pegar — Claude edita el archivo y Phoenix Code lo recarga automáticamente.
+Sirve para que Claude **modifique un archivo** de tu proyecto. Antes de escribir al disco, te muestra una **vista previa del diff** (líneas añadidas en verde, eliminadas en rojo) para que apruebes o canceles los cambios.
 
 **¿Cómo usarlo?**
 1. Abre el archivo que quieres editar en el editor
@@ -113,9 +113,7 @@ Sirve para que Claude **modifique directamente un archivo** de tu proyecto en di
    - *"refactoriza este archivo para que siga el patrón MVC"*
 4. Presiona **Enter**
 
-Claude edita el archivo completo y lo guarda. Phoenix Code lo recarga solo.
-
-> ⚠️ **Importante:** Claude reescribe el archivo completo. Si el archivo es muy grande o complejo, revisa los cambios después de que Claude termine.
+Claude genera el nuevo contenido y muestra el diff. Haz clic en **Aplicar** para escribir el archivo o **Cancelar** para descartarlo. Phoenix Code recarga el archivo automáticamente al aplicar.
 
 **Atajo:**
 
