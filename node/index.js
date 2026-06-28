@@ -175,48 +175,6 @@ exports.ask = async function({ prompt, projectPath, sessionId = "default", inclu
     return reply;
 };
 
-exports.editFile = async function({ instruction, filePath, projectPath, sessionId = "default", strings }) {
-    const p = strings || {};
-    if (!projectPath || !fs.existsSync(projectPath)) throw new Error(p.beErrNotFound + projectPath);
-
-    const fullPath = path.join(projectPath, filePath.replace(/\//g, path.sep));
-    const resolved = path.resolve(fullPath);
-    if (!resolved.startsWith(path.resolve(projectPath))) throw new Error(p.beErrOutsideProject);
-
-    let fileContent = "";
-    try { fileContent = fs.readFileSync(fullPath, "utf8"); } catch(e) {}
-
-    const history = getHistory(sessionId);
-    let histCtx = "";
-    if (history.length > 0) {
-        histCtx = p.histContext + "\n";
-        history.slice(-4).forEach(m => {
-            histCtx += (m.role === "user" ? p.editHistUser : p.editHistAssist) + m.content.slice(0, 150) + "\n";
-        });
-        histCtx += "\n";
-    }
-
-    const editPrompt = p.systemEdit + "\n"
-        + histCtx
-        + p.editModify.replace("%s", filePath) + "\n\n"
-        + instruction + "\n\n"
-        + (fileContent
-            ? p.editCurrent + "\n```\n" + fileContent + "\n```\n\n"
-            : p.editCreate + "\n\n")
-        + p.editImportant;
-
-    const newContent = await runClaude(editPrompt, projectPath);
-    const cleaned    = newContent.replace(/^```[\w]*\n?/, "").replace(/\n?```$/, "").trim();
-
-    fs.mkdirSync(path.dirname(fullPath), { recursive: true });
-    fs.writeFileSync(fullPath, cleaned, "utf8");
-
-    addToHistory(sessionId, "user",      p.editHistMsg.replace("%s", filePath).replace("%s", instruction));
-    addToHistory(sessionId, "assistant", p.editHistReply.replace("%s", filePath));
-
-    return p.editDone + filePath;
-};
-
 exports.previewEdit = async function({ instruction, filePath, projectPath, sessionId = "default", strings }) {
     const p = strings || {};
     if (!projectPath || !fs.existsSync(projectPath)) throw new Error(p.beErrNotFound + projectPath);
