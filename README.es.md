@@ -3,7 +3,7 @@
 🇺🇸 [English](README.md) | 🇲🇽 **Español**
 
 **Autor:** Erik Dávila
-**Versión:** 2.5.6
+**Versión:** 2.5.7
 **Requiere:** Phoenix Code Desktop + Claude Code CLI instalado
 
 ---

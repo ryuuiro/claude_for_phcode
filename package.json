@@ -2,7 +2,7 @@
     "name": "claude-for-phcode",
     "title": "Claude AI Assistant",
     "description": "Claude AI coding assistant para Phoenix Code. Chat, explicar, refactorizar, editar archivos y git — sin configuración extra.",
-    "version": "2.5.6",
+    "version": "2.5.7",
     "author": "Erik Dávila",
     "homepage": "https://github.com/ryuuiro/claude_for_phcode",
     "license": "MIT",

@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.5.7] - 2026-06-28
+### Added
+- i18n completo: `gitStageFiles` y `gitExcludeHint` traducidos en los 31 idiomas (los 29 idiomas restantes ya tenían las demás cadenas)
+### Changed
+- README bilingüe: `README.md` en inglés y `README.es.md` en español, ambos con selector de idioma en la cabecera
+- Documentación del Modo Editar actualizada para reflejar el flujo real (diff preview antes de escribir al disco)
+### Removed
+- `exports.editFile` eliminado de `node/index.js` — código muerto desde la migración a `previewEdit`+`applyEdit`
+
 ## [2.5.6] - 2026-06-27
 ### Added
 - Vista previa de cambios (diff) en modo Edit antes de aplicar: Claude muestra las líneas añadidas (verde) y eliminadas (rojo) con botones "Aplicar" / "Cancelar"
