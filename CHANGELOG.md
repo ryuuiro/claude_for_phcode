@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.5.8] - 2026-07-02
+### Fixed
+- Cancelar limpia el elemento de stream parcial del chat antes de anular el estado — evitaba que el texto cortado quedara visible junto al mensaje "Cancelado"
+- Cambio de idioma preserva el historial del chat: se usa `.detach()` para extraer los mensajes antes de reconstruir el panel y se reinsertan después — antes se borraban
+- Procesos de Claude separados: `_directProc` para llamadas bloqueantes (edit/git) y `_streamProc` para streaming (chat) — evita que cancelar el chat mate silenciosamente una edición en curso
+- Mensaje de error "Could not run claude:" ahora usa la cadena traducida `beErrCantRun` del idioma activo en lugar de estar hardcodeado en inglés
+- Texto "No changes" del diff preview ahora usa la clave `diffNoChanges` traducida en los 31 idiomas en lugar de estar hardcodeado en inglés
+### Changed
+- Evicción FIFO de sesiones: máximo 10 sesiones concurrentes; al superar el límite se elimina la más antigua
+- `runClaudeStream` eliminada — era código duplicado de `runClaude`; ahora un único `runClaude(prompt, cwd, sessionId?)` activa el modo streaming cuando se pasa `sessionId`
+
 ## [2.5.7] - 2026-06-28
 ### Added
 - i18n completo: `gitStageFiles` y `gitExcludeHint` traducidos en los 31 idiomas (los 29 idiomas restantes ya tenían las demás cadenas)

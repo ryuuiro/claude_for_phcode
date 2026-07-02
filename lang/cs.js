@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Použít",
         newConversationConfirm:    "Zahájit nový rozhovor? Aktuální bude smazán.",
         gitStageFiles:             "Soubory ke stagování:",
-        gitExcludeHint:            "Vyloučit soubory? (mezera nebo čárka, Enter pro pokračování)"
+        gitExcludeHint:            "Vyloučit soubory? (mezera nebo čárka, Enter pro pokračování)",
+        diffNoChanges:             "Žádné změny"
     };
 });

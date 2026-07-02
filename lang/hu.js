@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Alkalmaz",
         newConversationConfirm:    "Új beszélgetés indítása? Az aktuális előzmények törlődnek.",
         gitStageFiles:             "Fájlok stage-eléshez:",
-        gitExcludeHint:            "Kizárandó fájlok? (szóköz vagy vessző, Enter a folytatáshoz)"
+        gitExcludeHint:            "Kizárandó fájlok? (szóköz vagy vessző, Enter a folytatáshoz)",
+        diffNoChanges:             "Nincsenek változások"
     };
 });

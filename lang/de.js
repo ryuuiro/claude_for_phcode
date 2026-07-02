@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Anwenden",
         newConversationConfirm:    "Neues Gespräch starten? Der aktuelle Verlauf wird gelöscht.",
         gitStageFiles:             "Dateien zum Stagen:",
-        gitExcludeHint:            "Dateien ausschließen? (Leerzeichen oder Komma, Enter zum Fortfahren)"
+        gitExcludeHint:            "Dateien ausschließen? (Leerzeichen oder Komma, Enter zum Fortfahren)",
+        diffNoChanges:             "Keine Änderungen"
     };
 });

@@ -15,15 +15,19 @@ let nodeConnector  = global.createNodeConnector(CONNECTOR_ID, exports);
 
 // ── Memoria de conversación ────────────────────────────────────────────────
 const sessions = {};
+const MAX_SESSIONS = 10;
 
 function getHistory(sessionId) {
-    if (!sessions[sessionId]) sessions[sessionId] = [];
+    if (!sessions[sessionId]) {
+        const keys = Object.keys(sessions);
+        if (keys.length >= MAX_SESSIONS) delete sessions[keys[0]];
+        sessions[sessionId] = [];
+    }
     return sessions[sessionId];
 }
 
 function addToHistory(sessionId, role, content) {
-    if (!sessions[sessionId]) sessions[sessionId] = [];
-    sessions[sessionId].push({ role, content });
+    getHistory(sessionId).push({ role, content });
     if (sessions[sessionId].length > 20) sessions[sessionId] = sessions[sessionId].slice(-20);
 }
 
@@ -65,7 +69,9 @@ function readProjectFiles(projectPath) {
 }
 
 // ── Claude CLI ─────────────────────────────────────────────────────────────
-function runClaude(prompt, cwd) {
+// sessionId: undefined → blocking (edit/git), string → streaming (chat)
+function runClaude(prompt, cwd, sessionId, p) {
+    const slot   = sessionId ? "_streamProc" : "_directProc";
     return new Promise((resolve, reject) => {
         const opts = { shell: true, env: { ...process.env } };
         if (cwd && fs.existsSync(cwd)) opts.cwd = cwd;
@@ -74,55 +80,31 @@ function runClaude(prompt, cwd) {
         proc.stdin.write(prompt);
         proc.stdin.end();
 
-        if (runClaude._currentProc) {
-            try { runClaude._currentProc.kill(); } catch(e) {}
+        if (runClaude[slot]) {
+            try { runClaude[slot].kill(); } catch(e) {}
         }
-        runClaude._currentProc = proc;
-
-        let out = "", err = "";
-        proc.stdout.on("data", d => { out += d.toString(); });
-        proc.stderr.on("data", d => { err += d.toString(); });
-        proc.on("close", code => {
-            runClaude._currentProc = null;
-            if (code === 0 || out.trim()) resolve(out.trim());
-            else if (code === null) reject(new Error("Cancelled."));
-            else reject(new Error(err.trim() || "Claude error code " + code));
-        });
-        proc.on("error", e => { runClaude._currentProc = null; reject(new Error("Could not run claude: " + e.message)); });
-    });
-}
-runClaude._currentProc = null;
-
-function runClaudeStream(prompt, cwd, sessionId) {
-    return new Promise((resolve, reject) => {
-        const opts = { shell: true, env: { ...process.env } };
-        if (cwd && fs.existsSync(cwd)) opts.cwd = cwd;
-
-        const proc = spawn("claude", ["--print", "--output-format", "text", "--dangerously-skip-permissions"], opts);
-        proc.stdin.write(prompt);
-        proc.stdin.end();
-
-        if (runClaude._currentProc) {
-            try { runClaude._currentProc.kill(); } catch(e) {}
-        }
-        runClaude._currentProc = proc;
+        runClaude[slot] = proc;
 
         let out = "", err = "";
         proc.stdout.on("data", d => {
             const chunk = d.toString();
             out += chunk;
-            try { nodeConnector.triggerPeer("streamChunk", { chunk, sessionId }); } catch(e) {}
+            if (sessionId) {
+                try { nodeConnector.triggerPeer("streamChunk", { chunk, sessionId }); } catch(e) {}
+            }
         });
         proc.stderr.on("data", d => { err += d.toString(); });
         proc.on("close", code => {
-            runClaude._currentProc = null;
+            runClaude[slot] = null;
             if (code === 0 || out.trim()) resolve(out.trim());
             else if (code === null) reject(new Error("Cancelled."));
             else reject(new Error(err.trim() || "Claude error code " + code));
         });
-        proc.on("error", e => { runClaude._currentProc = null; reject(new Error("Could not run claude: " + e.message)); });
+        proc.on("error", e => { runClaude[slot] = null; reject(new Error((p && p.beErrCantRun || "Could not run claude: ") + e.message)); });
     });
 }
+runClaude._directProc = null;
+runClaude._streamProc = null;
 
 // ── Git ────────────────────────────────────────────────────────────────────
 function runGit(args, cwd) {
@@ -169,7 +151,7 @@ exports.ask = async function({ prompt, projectPath, sessionId = "default", inclu
 
     fullPrompt += p.userLabel + prompt;
 
-    const reply = await runClaudeStream(fullPrompt, projectPath, sessionId);
+    const reply = await runClaude(fullPrompt, projectPath, sessionId, p);
     addToHistory(sessionId, "user", prompt);
     addToHistory(sessionId, "assistant", reply);
     return reply;
@@ -205,7 +187,7 @@ exports.previewEdit = async function({ instruction, filePath, projectPath, sessi
             : p.editCreate + "\n\n")
         + p.editImportant;
 
-    const newRaw = await runClaude(editPrompt, projectPath);
+    const newRaw = await runClaude(editPrompt, projectPath, undefined, p);
     const newContent = newRaw.replace(/^```[\w]*\n?/, "").replace(/\n?```$/, "").trim();
 
     return { filePath, oldContent, newContent };
@@ -257,7 +239,7 @@ exports.git = async function({ action, projectPath, message, excludes, strings }
             const diff     = await runGit("diff", projectPath).catch(() => "");
             const msg      = await runClaude(
                 p.smartCommit + status + p.smartCommitDiff + diff.slice(0, 2000),
-                projectPath
+                projectPath, undefined, p
             );
             const cleanMsg = msg.trim().split("\n")[0];
             await runGit("add .", projectPath);
@@ -287,8 +269,8 @@ exports.ping = async function() {
 };
 
 exports.cancel = async function() {
-    if (runClaude._currentProc) {
-        try { runClaude._currentProc.kill(); runClaude._currentProc = null; } catch(e) {}
+    if (runClaude._streamProc) {
+        try { runClaude._streamProc.kill(); runClaude._streamProc = null; } catch(e) {}
         return true;
     }
     return false;

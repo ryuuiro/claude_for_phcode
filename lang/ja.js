@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "適用",
         newConversationConfirm:    "新しい会話を開始しますか？現在の履歴が消去されます。",
         gitStageFiles:             "ステージするファイル:",
-        gitExcludeHint:            "除外するファイルは？（スペースまたはカンマ区切り、Enterで続行）"
+        gitExcludeHint:            "除外するファイルは？（スペースまたはカンマ区切り、Enterで続行）",
+        diffNoChanges:             "変更なし"
     };
 });

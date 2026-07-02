@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Apply",
         newConversationConfirm:    "Start a new conversation? Current history will be cleared.",
         gitStageFiles:             "Files to be staged:",
-        gitExcludeHint:            "Exclude files? (space or comma, Enter to continue)"
+        gitExcludeHint:            "Exclude files? (space or comma, Enter to continue)",
+        diffNoChanges:             "No changes"
     };
 });

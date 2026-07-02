@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Aplică",
         newConversationConfirm:    "Porniți o conversație nouă? Istoricul curent va fi șters.",
         gitStageFiles:             "Fișiere de adăugat:",
-        gitExcludeHint:            "Excludeți fișiere? (spațiu sau virgulă, Enter pentru a continua)"
+        gitExcludeHint:            "Excludeți fișiere? (spațiu sau virgulă, Enter pentru a continua)",
+        diffNoChanges:             "Fără modificări"
     };
 });

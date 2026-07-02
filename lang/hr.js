@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Primijeni",
         newConversationConfirm:    "Pokrenuti novi razgovor? Trenutna povijest bit će obrisana.",
         gitStageFiles:             "Datoteke za stage:",
-        gitExcludeHint:            "Isključi datoteke? (razmak ili zarez, Enter za nastavak)"
+        gitExcludeHint:            "Isključi datoteke? (razmak ili zarez, Enter za nastavak)",
+        diffNoChanges:             "Nema izmjena"
     };
 });

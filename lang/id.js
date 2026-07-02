@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Terapkan",
         newConversationConfirm:    "Mulai percakapan baru? Riwayat saat ini akan dihapus.",
         gitStageFiles:             "File yang akan di-stage:",
-        gitExcludeHint:            "Kecualikan file? (spasi atau koma, Enter untuk lanjut)"
+        gitExcludeHint:            "Kecualikan file? (spasi atau koma, Enter untuk lanjut)",
+        diffNoChanges:             "Tidak ada perubahan"
     };
 });

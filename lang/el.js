@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Εφαρμογή",
         newConversationConfirm:    "Έναρξη νέας συνομιλίας; Η τρέχουσα θα διαγραφεί.",
         gitStageFiles:             "Αρχεία για stage:",
-        gitExcludeHint:            "Εξαίρεση αρχείων; (κενό ή κόμμα, Enter για συνέχεια)"
+        gitExcludeHint:            "Εξαίρεση αρχείων; (κενό ή κόμμα, Enter για συνέχεια)",
+        diffNoChanges:             "Χωρίς αλλαγές"
     };
 });

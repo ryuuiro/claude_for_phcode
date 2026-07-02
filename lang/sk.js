@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Použiť",
         newConversationConfirm:    "Začať novú konverzáciu? Aktuálna história bude vymazaná.",
         gitStageFiles:             "Súbory na stage:",
-        gitExcludeHint:            "Vylúčiť súbory? (medzera alebo čiarka, Enter pre pokračovanie)"
+        gitExcludeHint:            "Vylúčiť súbory? (medzera alebo čiarka, Enter pre pokračovanie)",
+        diffNoChanges:             "Žiadne zmeny"
     };
 });

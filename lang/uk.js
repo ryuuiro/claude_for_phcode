@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Застосувати",
         newConversationConfirm:    "Почати нову розмову? Поточна історія буде очищена.",
         gitStageFiles:             "Файли для додавання:",
-        gitExcludeHint:            "Виключити файли? (пробіл або кома, Enter для продовження)"
+        gitExcludeHint:            "Виключити файли? (пробіл або кома, Enter для продовження)",
+        diffNoChanges:             "Немає змін"
     };
 });

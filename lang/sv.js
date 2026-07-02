@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Tillämpa",
         newConversationConfirm:    "Starta en ny konversation? Nuvarande historik rensas.",
         gitStageFiles:             "Filer att stage:",
-        gitExcludeHint:            "Uteslut filer? (mellanslag eller komma, Enter för att fortsätta)"
+        gitExcludeHint:            "Uteslut filer? (mellanslag eller komma, Enter för att fortsätta)",
+        diffNoChanges:             "Inga ändringar"
     };
 });

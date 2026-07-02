@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Anvend",
         newConversationConfirm:    "Starte en ny samtale? Den nuværende slettes.",
         gitStageFiles:             "Filer der skal stages:",
-        gitExcludeHint:            "Udeluk filer? (mellemrum eller komma, Enter for at fortsætte)"
+        gitExcludeHint:            "Udeluk filer? (mellemrum eller komma, Enter for at fortsætte)",
+        diffNoChanges:             "Ingen ændringer"
     };
 });

@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Toepassen",
         newConversationConfirm:    "Nieuw gesprek starten? De huidige geschiedenis wordt gewist.",
         gitStageFiles:             "Te stagen bestanden:",
-        gitExcludeHint:            "Bestanden uitsluiten? (spatie of komma, Enter om door te gaan)"
+        gitExcludeHint:            "Bestanden uitsluiten? (spatie of komma, Enter om door te gaan)",
+        diffNoChanges:             "Geen wijzigingen"
     };
 });

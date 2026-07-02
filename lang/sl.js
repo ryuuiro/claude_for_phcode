@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Uporabi",
         newConversationConfirm:    "Začeti nov pogovor? Trenutna zgodovina bo izbrisana.",
         gitStageFiles:             "Datoteke za stage:",
-        gitExcludeHint:            "Izključi datoteke? (presledek ali vejica, Enter za nadaljevanje)"
+        gitExcludeHint:            "Izključi datoteke? (presledek ali vejica, Enter za nadaljevanje)",
+        diffNoChanges:             "Brez sprememb"
     };
 });

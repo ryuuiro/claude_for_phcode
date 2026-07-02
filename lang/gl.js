@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Aplicar",
         newConversationConfirm:    "Iniciar nova conversa? O historial actual borrarase.",
         gitStageFiles:             "Ficheiros a stagear:",
-        gitExcludeHint:            "Excluír ficheiros? (espazo ou coma, Enter para continuar)"
+        gitExcludeHint:            "Excluír ficheiros? (espazo ou coma, Enter para continuar)",
+        diffNoChanges:             "Sen cambios"
     };
 });

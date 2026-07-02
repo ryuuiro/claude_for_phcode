@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "اعمال",
         newConversationConfirm:    "آیا مکالمه جدیدی شروع شود؟ تاریخچه فعلی پاک خواهد شد.",
         gitStageFiles:             "فایل‌های آماده برای stage:",
-        gitExcludeHint:            "حذف فایل‌ها؟ (فاصله یا ویرگول، Enter برای ادامه)"
+        gitExcludeHint:            "حذف فایل‌ها؟ (فاصله یا ویرگول، Enter برای ادامه)",
+        diffNoChanges:             "بدون تغییر"
     };
 });

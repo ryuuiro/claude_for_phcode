@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Appliquer",
         newConversationConfirm:    "Démarrer une nouvelle conversation ? L'historique actuel sera effacé.",
         gitStageFiles:             "Fichiers à ajouter à l'index :",
-        gitExcludeHint:            "Exclure des fichiers ? (espace ou virgule, Entrée pour continuer)"
+        gitExcludeHint:            "Exclure des fichiers ? (espace ou virgule, Entrée pour continuer)",
+        diffNoChanges:             "Aucun changement"
     };
 });

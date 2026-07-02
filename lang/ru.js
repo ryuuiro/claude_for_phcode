@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Применить",
         newConversationConfirm:    "Начать новый разговор? Текущая история будет очищена.",
         gitStageFiles:             "Файлы для добавления:",
-        gitExcludeHint:            "Исключить файлы? (пробел или запятая, Enter для продолжения)"
+        gitExcludeHint:            "Исключить файлы? (пробел или запятая, Enter для продолжения)",
+        diffNoChanges:             "Нет изменений"
     };
 });

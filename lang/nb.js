@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Bruk",
         newConversationConfirm:    "Starte en ny samtale? Gjeldende historikk vil bli slettet.",
         gitStageFiles:             "Filer som skal stages:",
-        gitExcludeHint:            "Utelat filer? (mellomrom eller komma, Enter for å fortsette)"
+        gitExcludeHint:            "Utelat filer? (mellomrom eller komma, Enter for å fortsette)",
+        diffNoChanges:             "Ingen endringer"
     };
 });

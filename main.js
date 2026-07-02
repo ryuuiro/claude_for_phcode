@@ -191,8 +191,10 @@ define(function (require, exports, module) {
         var savedMode = currentMode;
         var savedCtx  = attachedContext;
         attachedContext = null;
+        var $savedMsgs = $panel.find("#clai-messages").detach();
         loadLang(LANG, function() {
             $panel.html(buildInnerHTML());
+            $panel.find("#clai-messages").replaceWith($savedMsgs);
             initUI();
             setMode(savedMode);
             if (savedCtx) setCtx(savedCtx);
@@ -317,7 +319,7 @@ define(function (require, exports, module) {
                 if (n !== undefined) html.push('<div style="color:#a6e3a1;background:#0d2a14;font-size:10px;white-space:pre;font-family:monospace;padding:0 2px">+' + escHtml(n) + '</div>');
             }
         }
-        return html.join("") || '<div style="color:#6c7086;font-size:10px;padding:4px">No changes</div>';
+        return html.join("") || '<div style="color:#6c7086;font-size:10px;padding:4px">' + t("diffNoChanges") + '</div>';
     }
 
     function showDiffPreview(result, instruction, projectPath) {
@@ -425,6 +427,7 @@ define(function (require, exports, module) {
         }, 1000);
         $l.find("#clai-cancel-btn").on("click", function() {
             callNode("cancel", {}).catch(function(){});
+            if (streamState && streamState.$el) { streamState.$el.remove(); }
             streamState = null;
             hideLoading();
             appendMessage("assistant", t("cancelled"), false);

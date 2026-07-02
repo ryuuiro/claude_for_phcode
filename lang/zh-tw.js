@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "套用",
         newConversationConfirm:    "開始新對話？目前的歷史記錄將被清除。",
         gitStageFiles:             "將要暫存的檔案：",
-        gitExcludeHint:            "排除檔案？（空格或逗號分隔，Enter 繼續）"
+        gitExcludeHint:            "排除檔案？（空格或逗號分隔，Enter 繼續）",
+        diffNoChanges:             "無變更"
     };
 });

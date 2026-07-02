@@ -97,6 +97,7 @@ define(function () {
         editPreviewApply:          "Käytä",
         newConversationConfirm:    "Aloita uusi keskustelu? Nykyinen historia poistetaan.",
         gitStageFiles:             "Tiedostot stagettavaksi:",
-        gitExcludeHint:            "Sulje pois tiedostoja? (välilyönti tai pilkku, Enter jatkaaksesi)"
+        gitExcludeHint:            "Sulje pois tiedostoja? (välilyönti tai pilkku, Enter jatkaaksesi)",
+        diffNoChanges:             "Ei muutoksia"
     };
 });
